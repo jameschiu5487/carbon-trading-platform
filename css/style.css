@@ -1,0 +1,245 @@
+*{
+    margin: 0; 
+    padding: 0;
+    border: 0;
+    box-sizing: border-box;
+    list-style: none;
+    font-family: 'Nunito', sans-serif;
+}
+  
+body{
+    background-image: url("../img/homepage_background.jpg");
+    background-size: cover;
+    background-position: center;
+    opacity: 0.93;
+}
+
+.main-content{
+    min-height: 60vh;
+    width: 60%;
+    margin: 210px auto;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+}
+
+.left{
+    grid-column: span 3;
+    height: 90%;
+    background-color: white;
+}
+
+.right{
+    grid-column: span 4;
+    height: 90%;
+    background-color:white;
+}
+
+.container{
+    padding-top: 5px;
+    padding-right: 15px;
+}
+  
+.container nav{
+    float: right;
+    font-size: 20px;
+}
+  
+.container nav ul{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+  
+.container nav ul li{
+    display: inline-block;
+    margin-left: 20px;
+    padding-top: 20px;
+    position: relative;
+}
+  
+.container nav ul li a{
+    color: #808080;
+    text-decoration: none;
+    text-transform: uppercase;
+    border-radius: 10px;
+    padding: 7px;
+    /* border: 1px solid #A6ACAF; */
+} 
+  
+.container nav ul li a:hover{
+    background-color: #bcc6cc;
+    color: white;
+}
+
+.login-title h2{
+    font-size: 130px;
+    color: #808080;
+    font-weight: 100;
+    letter-spacing: 2.5px;
+    padding-top: 105px;
+    margin-left: 80px;
+    text-transform: uppercase;
+    border-bottom: 2px solid #A6ACAF;
+}
+
+.login-form-form {
+    width: 400px;
+    margin-top: 135px;
+    margin-left: 110px;
+    padding: 45px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+  
+.login-form-form input[type="text"],
+.login-form-form input[type="password"] {
+    display: block;
+    width: 100%;
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 18px;
+}
+  
+.login-form-form button[type="submit"] {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #A6ACAF;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+  
+.login-form-form button[type="submit"]:hover {
+    background-color: #808080;
+}
+
+  
+.signup-form h2{
+    font-size: 130px;
+    color: #808080;
+    font-weight: 100;
+    letter-spacing: 2.5px;
+    padding-top: 125px;
+    margin-left: 80px;
+    text-transform: uppercase;
+    border-bottom: 2px solid #A6ACAF;
+}
+
+.signup-form-form {
+    width: 420px;
+    margin-top: 85px;
+    margin-bottom: 135px;
+    margin-left: 110px;
+    padding: 45px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.signup-form-form select{
+    /* display: block; */
+    width: 100%;
+    height: 40px;
+    margin-bottom: 20px;
+    padding: 10px;
+    /* border: 1px solid #ccc; */
+    border-radius: 5px;
+    font-size: 18px;
+    color: #ccc;
+}
+
+.signup-form-form input[type="text"],
+.signup-form-form input[type="number"],
+.signup-form-form input[type="password"]{
+    display: block;
+    width: 100%;
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 18px;
+}
+
+.signup-form-form button[type="submit"] {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #A6ACAF;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.signup-form-form button[type="submit"]:hover {
+    background-color: #808080;
+}
+
+.changepass-form-form p,
+.login-form-form p,
+.signup-form-form p {
+    font-size: 15px;
+    color: #808080;
+    font-weight: 400;
+    letter-spacing: 1.5px;
+    padding-top: 15px;
+}
+
+.changepass-form h2{
+    font-size: 75px;
+    color: #808080;
+    font-weight: 100;
+    letter-spacing: 2.5px;
+    padding-top: 170px;
+    margin-left: 30px;
+    text-transform: uppercase;
+    border-bottom: 2px solid #A6ACAF;
+}
+
+.changepass-form-form {
+    width: 400px;
+    margin-left: 100px;
+    margin-top: 90px;
+    margin-bottom: 50px;
+    padding: 45px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.changepass-form-form input[type="text"],
+.changepass-form-form input[type="password"] {
+    display: block;
+    width: 100%;
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 18px;
+}
+
+.changepass-form-form button[type="submit"] {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #A6ACAF;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.changepass-form-form button[type="submit"]:hover {
+    background-color: #808080;
+}

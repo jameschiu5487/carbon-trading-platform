@@ -1,0 +1,59 @@
+*{
+    margin: 0; 
+    padding: 0;
+    border: 0;
+    box-sizing: border-box;
+    list-style: none;
+    font-family: 'Nunito', sans-serif;
+}
+  
+body{
+    background-image: url("../img/homepage_background.jpg");
+    background-size: cover;
+    background-position: center;
+}
+
+.home{
+    min-height: 60vh;
+    width: 60%;
+    margin: 210px auto;
+    display: grid;
+}
+
+.container{
+    padding-bottom: 10px;
+}
+  
+.container nav{
+    font-size: 70px;
+}
+  
+.container nav ul{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+  
+.container nav ul li{
+    display: inline-block;
+    margin-left: 20px;
+    position: relative;
+}
+  
+.container nav ul li a{
+    color: #808080;
+    text-decoration: none;
+    text-transform: uppercase;
+    border-radius: 10px;
+    padding: 7px;
+} 
+  
+.container nav ul li a:hover{
+    color: #F0F3F4  ;
+}
+  
+.home a{
+    color: #808080;
+    text-decoration: none;
+    padding-left: 450px;
+}
