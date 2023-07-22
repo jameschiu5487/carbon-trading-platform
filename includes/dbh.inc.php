@@ -1,9 +1,9 @@
 <?php
 
-$serverName = "localhost";
-$dBUsername = "root";
-$dBPassword = "";
-$dBName = "carbon_trading_website";
+$serverName = "carbon-trading.database.windows.net";
+$dBUsername = "IMFteam";
+$dBPassword = "NYCUimf5487";
+$dBName = "carbon-trading";
 
 $conn = mysqli_connect($serverName, $dBUsername, $dBPassword, $dBName);
 
