@@ -17,7 +17,8 @@ body{
 .main-content{
     min-height: 60vh;
     width: 60%;
-    margin: 210px auto;
+    margin: 13.125rem auto;
+    /* margin: 210px auto; */
     display: grid;
     grid-template-columns: repeat(7, 1fr);
 }
@@ -35,13 +36,16 @@ body{
 }
 
 .container{
-    padding-top: 5px;
-    padding-right: 15px;
+    padding-top: 0.3125rem; 
+    padding-right: 0.9375rem;
+    /* padding-top: 5px;
+    padding-right: 15px; */
 }
   
 .container nav{
     float: right;
-    font-size: 20px;
+    /* font-size: 20px; */
+    font-size: 1.25rem;
 }
   
 .container nav ul{
@@ -52,8 +56,10 @@ body{
   
 .container nav ul li{
     display: inline-block;
-    margin-left: 20px;
-    padding-top: 20px;
+    /* margin-left: 20px; */
+    /* padding-top: 20px; */
+    margin-left: 1.25rem;
+    padding-top: 1.25rem;
     position: relative;
 }
   
@@ -61,8 +67,10 @@ body{
     color: #808080;
     text-decoration: none;
     text-transform: uppercase;
-    border-radius: 10px;
-    padding: 7px;
+    border-radius: 0.625rem;
+    /* border-radius: 10px; */
+    /* padding: 7px; */
+    padding: 0.4375rem;
     /* border: 1px solid #A6ACAF; */
 } 
   
@@ -72,46 +80,46 @@ body{
 }
 
 .login-title h2{
-    font-size: 130px;
+    font-size: 8.125rem;
     color: #808080;
     font-weight: 100;
-    letter-spacing: 2.5px;
-    padding-top: 105px;
-    margin-left: 80px;
+    letter-spacing: 0.15625rem;
+    padding-top: 6.5625rem;
+    margin-left: 5rem;
     text-transform: uppercase;
-    border-bottom: 2px solid #A6ACAF;
+    border-bottom: 0.125rem solid #A6ACAF;
 }
 
 .login-form-form {
-    width: 400px;
-    margin-top: 135px;
-    margin-left: 110px;
-    padding: 45px;
-    border: 2px solid #ccc;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 25rem;
+    margin-top: 8.4375rem;
+    margin-left: 6.875rem;
+    padding: 2.8125rem;
+    border: 0.125rem solid #ccc;
+    border-radius: 0.3125rem;
+    box-shadow: 0 0 0.625rem rgba(0, 0, 0, 0.1);
 }
   
 .login-form-form input[type="text"],
 .login-form-form input[type="password"] {
     display: block;
     width: 100%;
-    margin-bottom: 20px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 18px;
+    margin-bottom: 1.25rem;
+    padding: 0.625rem;
+    border: 0.0625rem solid #ccc;
+    border-radius: 0.3125rem;
+    font-size: 1.125rem;
 }
   
 .login-form-form button[type="submit"] {
     display: block;
     width: 100%;
-    padding: 10px;
+    padding: 0.625rem;
     background-color: #A6ACAF;
     color: #fff;
     border: none;
-    border-radius: 5px;
-    font-size: 18px;
+    border-radius: 0.3125rem;
+    font-size: 1.125rem;
     cursor: pointer;
     transition: background-color 0.3s;
 }
@@ -122,37 +130,36 @@ body{
 
   
 .signup-form h2{
-    font-size: 130px;
+    font-size: 8.125rem;
     color: #808080;
     font-weight: 100;
-    letter-spacing: 2.5px;
-    padding-top: 125px;
-    margin-left: 80px;
+    letter-spacing: 0.15625rem;
+    padding-top: 7.8125rem;
+    margin-left: 5rem;
     text-transform: uppercase;
-    border-bottom: 2px solid #A6ACAF;
+    border-bottom: 0.125rem solid #A6ACAF;
 }
 
 .signup-form-form {
-    width: 420px;
-    margin-top: 85px;
-    margin-bottom: 135px;
-    margin-left: 110px;
-    padding: 45px;
-    border: 2px solid #ccc;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 26.25rem;
+    margin-top: 5.3125rem;
+    margin-bottom: 8.4375rem;
+    margin-left: 6.875rem;
+    padding: 2.8125rem;
+    border: 0.125rem solid #ccc;
+    border-radius: 0.3125rem;
+    box-shadow: 0 0 0.625rem rgba(0, 0, 0, 0.1);
 }
 
-.signup-form-form select{
-    /* display: block; */
+.signup-form-form select {
     width: 100%;
-    height: 40px;
-    margin-bottom: 20px;
-    padding: 10px;
-    /* border: 1px solid #ccc; */
-    border-radius: 5px;
-    font-size: 18px;
-    color: #ccc;
+    padding: 0.625rem;
+    border: 0.0625rem solid #ccc;
+    border-radius: 0.3125rem;
+    font-size: 1.125rem;
+    color: #ccc; 
+    background-color: #fff; 
+    margin-bottom: 1.25rem;
 }
 
 .signup-form-form input[type="text"],
@@ -160,22 +167,22 @@ body{
 .signup-form-form input[type="password"]{
     display: block;
     width: 100%;
-    margin-bottom: 20px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 18px;
+    margin-bottom: 1.25rem;
+    padding: 0.625rem;
+    border: 0.0625rem solid #ccc;
+    border-radius: 0.3125rem;
+    font-size: 1.125rem;
 }
 
 .signup-form-form button[type="submit"] {
     display: block;
     width: 100%;
-    padding: 10px;
+    padding: 0.625rem;
     background-color: #A6ACAF;
     color: #fff;
     border: none;
-    border-radius: 5px;
-    font-size: 18px;
+    border-radius: 0.3125rem;
+    font-size: 1.125rem;
     cursor: pointer;
     transition: background-color 0.3s;
 }
@@ -187,55 +194,55 @@ body{
 .changepass-form-form p,
 .login-form-form p,
 .signup-form-form p {
-    font-size: 15px;
+    font-size: 0.9375rem;
     color: #808080;
     font-weight: 400;
-    letter-spacing: 1.5px;
-    padding-top: 15px;
+    letter-spacing: 0.09375rem;
+    padding-top: 0.9375rem;
 }
 
 .changepass-form h2{
-    font-size: 75px;
+    font-size: 4.6875rem;
     color: #808080;
     font-weight: 100;
-    letter-spacing: 2.5px;
-    padding-top: 170px;
-    margin-left: 30px;
+    letter-spacing: 0.15625rem;
+    padding-top: 10.625rem;
+    margin-left: 1.875rem;
     text-transform: uppercase;
-    border-bottom: 2px solid #A6ACAF;
+    border-bottom: 0.125rem solid #A6ACAF;
 }
 
 .changepass-form-form {
-    width: 400px;
-    margin-left: 100px;
-    margin-top: 90px;
-    margin-bottom: 50px;
-    padding: 45px;
-    border: 2px solid #ccc;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 25rem;
+    margin-left: 6.25rem;
+    margin-top: 5.625rem;
+    margin-bottom: 3.125rem;
+    padding: 2.8125rem;
+    border: 0.125rem solid #ccc;
+    border-radius: 0.3125rem;
+    box-shadow: 0 0 0.625rem rgba(0, 0, 0, 0.1);
 }
 
 .changepass-form-form input[type="text"],
 .changepass-form-form input[type="password"] {
     display: block;
     width: 100%;
-    margin-bottom: 20px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 18px;
+    margin-bottom: 1.25rem;
+    padding: 0.625rem;
+    border: 0.0625rem solid #ccc;
+    border-radius: 0.3125rem;
+    font-size: 1.125rem;
 }
 
 .changepass-form-form button[type="submit"] {
     display: block;
     width: 100%;
-    padding: 10px;
+    padding: 0.625rem;
     background-color: #A6ACAF;
     color: #fff;
     border: none;
-    border-radius: 5px;
-    font-size: 18px;
+    border-radius: 0.3125rem;
+    font-size: 1.125rem;
     cursor: pointer;
     transition: background-color 0.3s;
 }
