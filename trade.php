@@ -245,6 +245,7 @@
                 <h1 class="sell-title">ASK</h1>   
                     <div id="ask-data">
                         <?php
+                            $ask_volumes_sum = 0;
                             if ($result_ask) {
                                 if (mysqli_num_rows($result_ask)>0) {
                                     while ($row = mysqli_fetch_assoc($result_ask)) {
@@ -255,8 +256,17 @@
                             }
                             for($i=4; $i>=0; $i--)
                             {
+                                $ask_volumes_sum += $ask_volumes[$i];
+                            }
+                            for($i=4; $i>=0; $i--)
+                            {
+                                $ask_vol_per = ($ask_volumes[$i] / $ask_volumes_sum) * 200;
+                                $ask_vol_per = number_format($ask_vol_per, 2);
                         ?>
                             <ul><?php echo "$".$ask_prices[$i]; ?></ul>
+                            <div class="progress-bar">
+                                <div class="ask_bar" style="width: <?php echo $ask_vol_per; ?>%;"></div>
+                            </div>
                             <li><?php echo "Volume : ".$ask_volumes[$i]; ?></li>
                         <?php
                             }
@@ -275,6 +285,7 @@
                 <h1 class="buy-title">BID</h1>
                     <div id="bid-data">
                         <?php
+                            $bid_volumes_sum = 0;
                             if ($result_bid) {
                                 if (mysqli_num_rows($result_bid)>0) {
                                     while ($row = mysqli_fetch_assoc($result_bid)) {
@@ -285,8 +296,17 @@
                             }
                             for($i=0; $i<=4; $i++)
                             {
+                                $bid_volumes_sum += $bid_volumes[$i];
+                            }
+                            for($i=0; $i<=4; $i++)
+                            {
+                                $bid_vol_per = ($bid_volumes[$i] / $bid_volumes_sum) * 200;
+                                $bid_vol_per = number_format($bid_vol_per, 2);
                         ?>
                             <ul><?php echo "$".$bid_prices[$i]; ?></ul>
+                            <div class="progress-bar">
+                                <div class="bid_bar" style="width: <?php echo $bid_vol_per; ?>%;"></div>
+                            </div>
                             <li><?php echo "Volume : ".$bid_volumes[$i]; ?></li>
                         <?php
                             }

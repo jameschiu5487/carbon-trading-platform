@@ -16,16 +16,19 @@ body{
 .home{
     min-height: 60vh;
     width: 60%;
-    margin: 210px auto;
+    /* margin: 210px auto; */
+    margin: 13.125rem auto;
     display: grid;
 }
 
 .container{
-    padding-bottom: 10px;
+    /* padding-bottom: 10px; */
+    padding-bottom: 0.625rem;
 }
   
 .container nav{
-    font-size: 70px;
+    /* font-size: 70px; */
+    font-size: 4.375rem;
 }
   
 .container nav ul{
@@ -36,7 +39,8 @@ body{
   
 .container nav ul li{
     display: inline-block;
-    margin-left: 20px;
+    /* margin-left: 20px; */
+    margin-left: 1.25rem;
     position: relative;
 }
   
@@ -44,8 +48,10 @@ body{
     color: #808080;
     text-decoration: none;
     text-transform: uppercase;
-    border-radius: 10px;
-    padding: 7px;
+    /* border-radius: 10px; */
+    border-radius: 0.625rem;
+    /* padding: 7px; */
+    padding: 0.4375rem;
 } 
   
 .container nav ul li a:hover{
@@ -55,5 +61,6 @@ body{
 .home a{
     color: #808080;
     text-decoration: none;
-    padding-left: 450px;
+    /* padding-left: 450px; */
+    padding-left: 28.125rem;
 }
