@@ -56,5 +56,5 @@ jobs:
         with:
           app-name: 'carbon-trading'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_53D6F3A9E4B9454BBF83E1C42CE03B89 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_FD886D79CB3A4DA28ABC434570963677 }}
           package: .
