@@ -59,12 +59,10 @@
                 INNER JOIN order_list
                 ON order_list.user = :user AND (fill_list.id1 = order_list.id OR fill_list.id2 = order_list.id)
                 ORDER BY fill_list.filled_order_id DESC";
-
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(':user', $user);
         $stmt->execute();
         $result2 = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
         print_r($result2);
 
         if (count($result2) > 0) {

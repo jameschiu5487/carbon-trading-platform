@@ -5,7 +5,7 @@
         $user = $_SESSION['useruid'];
     }
     $query = "SELECT * from order_list where user = '$user' ORDER BY id DESC";
-    $result = mysqli_query($conn, $query);
+    $result = sqlsrv_query($conn, $query);
     // 根據資料建立表格的HTML內容
     $html = '<table class="historical-data" id="historical">';
     $html .= '<tr>
