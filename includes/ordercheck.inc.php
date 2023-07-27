@@ -45,9 +45,9 @@ if (isset($_GET['sell'])){
 
 function Limit_order_buy($request, $price, $volume, $user, $conn) {
   $sql = "INSERT INTO order_list (request, price, volume, user, filled, unfilled, all_filled)VALUES ('$request', '$price', '$volume', '$user', 0, '$volume', 0)";
-  mysqli_query($conn, $sql);
+  sqlsrv_query($conn, $sql);
   $sql = "SELECT id FROM order_list ORDER BY id DESC LIMIT 1";
-  $result = mysqli_query($conn, $sql);
+  $result = sqlsrv_query($conn, $sql);
   if ($result) {
     // mysqli_num_rows方法可以回傳我們結果總共有幾筆資料
     if (mysqli_num_rows($result)>0) {
@@ -84,7 +84,7 @@ function Limit_order_buy($request, $price, $volume, $user, $conn) {
       $ask_price = $ask_prices[$i];
       echo "<br>";
       $sql = "SELECT id, unfilled, volume FROM order_list WHERE (price = '$ask_price' and all_filled = 0)and request = 'sell'";
-      $result = mysqli_query($conn, $sql);
+      $result = sqlsrv_query($conn, $sql);
       unset($ids);
       unset($unfilled);
       unset($volumes);
@@ -116,9 +116,9 @@ function Limit_order_buy($request, $price, $volume, $user, $conn) {
         if($count >= $unfilled[$j]){
           $count = $count-$unfilled[$j];
           $sql_update_order_list = "UPDATE order_list SET filled = '$volumes[$j]', unfilled = 0, all_filled = 1 WHERE id = '$ids[$j]'";
-          mysqli_query($conn, $sql_update_order_list);
+          sqlsrv_query($conn, $sql_update_order_list);
           $sql_update_fill_list = "INSERT INTO fill_list (id1, id2, price, volume)VALUES ('$id', '$ids[$j]', '$ask_prices[$i]', '$unfilled[$j]')";
-          mysqli_query($conn, $sql_update_fill_list);
+          sqlsrv_query($conn, $sql_update_fill_list);
           //成交改ask的量
           echo " ";
           echo "volume change1: ";
@@ -131,9 +131,9 @@ function Limit_order_buy($request, $price, $volume, $user, $conn) {
           $l_count = $unfilled[$j]-$count;
           $filled = $volumes[$j]-$l_count;
           $sql_update_order_list = "UPDATE order_list SET filled = '$filled', unfilled = '$l_count' WHERE id = '$ids[$j]'";
-          mysqli_query($conn, $sql_update_order_list);
+          sqlsrv_query($conn, $sql_update_order_list);
           $sql_update_fill_list = "INSERT INTO fill_list (id1, id2, price, volume)VALUES ('$id', '$ids[$j]', '$ask_prices[$i]', '$count')";
-          mysqli_query($conn, $sql_update_fill_list);
+          sqlsrv_query($conn, $sql_update_fill_list);
           //成交改ask的量
           echo " ";
           echo "volume change2: ";
@@ -148,7 +148,7 @@ function Limit_order_buy($request, $price, $volume, $user, $conn) {
       }
       if ($count==0){
         $sql_update_order_list = "UPDATE order_list SET filled = '$volume', unfilled = 0, all_filled = 1 WHERE id = '$id'";
-        mysqli_query($conn, $sql_update_order_list);
+        sqlsrv_query($conn, $sql_update_order_list);
         break;
       }
     }
@@ -163,15 +163,15 @@ function Limit_order_buy($request, $price, $volume, $user, $conn) {
     else {
       echo "in bid but no same price";
       $sql = "INSERT INTO bid VALUES ('{$price}', '{$volume}')";
-      mysqli_query($conn, $sql);
+      sqlsrv_query($conn, $sql);
     }
   }     
 }
 function IOC_order_buy($request, $volume, $user, $conn){
   $sql = "INSERT INTO order_list (request, price, volume, user, filled, unfilled, all_filled)VALUES ('$request', NULL, '$volume', '$user', 0, '$volume', 0)";
-  mysqli_query($conn, $sql);
+  sqlsrv_query($conn, $sql);
   $sql = "SELECT id FROM order_list ORDER BY id DESC LIMIT 1";
-  $result = mysqli_query($conn, $sql);
+  $result = sqlsrv_query($conn, $sql);
   if ($result) {
     // mysqli_num_rows方法可以回傳我們結果總共有幾筆資料
     if (mysqli_num_rows($result)>0) {
@@ -207,7 +207,7 @@ function IOC_order_buy($request, $volume, $user, $conn){
     $ask_price = $ask_prices[$i];
     echo "<br>";
     $sql = "SELECT id, unfilled, volume FROM order_list WHERE (price = '$ask_price' and all_filled = 0)and request = 'sell'";
-    $result = mysqli_query($conn, $sql);
+    $result = sqlsrv_query($conn, $sql);
     unset($ids);
     unset($unfilled);
     unset($volumes);
@@ -239,9 +239,9 @@ function IOC_order_buy($request, $volume, $user, $conn){
       if($count >= $unfilled[$j]){
         $count = $count-$unfilled[$j];
         $sql_update_order_list = "UPDATE order_list SET filled = '$volumes[$j]', unfilled = 0, all_filled = 1 WHERE id = '$ids[$j]'";
-        mysqli_query($conn, $sql_update_order_list);
+        sqlsrv_query($conn, $sql_update_order_list);
         $sql_update_fill_list = "INSERT INTO fill_list (id1, id2, price, volume)VALUES ('$id', '$ids[$j]', '$ask_prices[$i]', '$unfilled[$j]')";
-        mysqli_query($conn, $sql_update_fill_list);
+        sqlsrv_query($conn, $sql_update_fill_list);
         $total_volume+=$unfilled[$j];
         //成交改ask的量
         echo " ";
@@ -255,9 +255,9 @@ function IOC_order_buy($request, $volume, $user, $conn){
         $l_count = $unfilled[$j]-$count;
         $filled = $volumes[$j]-$l_count;
         $sql_update_order_list = "UPDATE order_list SET filled = '$filled', unfilled = '$l_count' WHERE id = '$ids[$j]'";
-        mysqli_query($conn, $sql_update_order_list);
+        sqlsrv_query($conn, $sql_update_order_list);
         $sql_update_fill_list = "INSERT INTO fill_list (id1, id2, price, volume)VALUES ('$id', '$ids[$j]', '$ask_prices[$i]', '$count')";
-        mysqli_query($conn, $sql_update_fill_list);
+        sqlsrv_query($conn, $sql_update_fill_list);
         $total_volume+=$count;
         //成交改ask的量
         echo " ";
@@ -273,21 +273,21 @@ function IOC_order_buy($request, $volume, $user, $conn){
     }
     if ($count==0){
       $sql_update_order_list = "UPDATE order_list SET filled = '$volume', unfilled = 0, all_filled = 1 WHERE id = '$id'";
-      mysqli_query($conn, $sql_update_order_list);
+      sqlsrv_query($conn, $sql_update_order_list);
       break;
     }
   }
   if($count != 0){
     $sql_update_order_list = "UPDATE order_list SET filled = '$total_volume', unfilled = 0, all_filled = 1 WHERE id = '$id'";
-    mysqli_query($conn, $sql_update_order_list);
+    sqlsrv_query($conn, $sql_update_order_list);
   }
   echo "end";
 }
 function Limit_order_sell($request, $price, $volume, $user, $conn) {
   $sql = "INSERT INTO order_list (request, price, volume, user, filled, unfilled, all_filled)VALUES ('$request', '$price', '$volume', '$user', 0, '$volume', 0)";
-  mysqli_query($conn, $sql);
+  sqlsrv_query($conn, $sql);
   $sql = "SELECT id FROM order_list ORDER BY id DESC LIMIT 1";
-  $result = mysqli_query($conn, $sql);
+  $result = sqlsrv_query($conn, $sql);
   if ($result) {
     // mysqli_num_rows方法可以回傳我們結果總共有幾筆資料
     if (mysqli_num_rows($result)>0) {
@@ -324,7 +324,7 @@ function Limit_order_sell($request, $price, $volume, $user, $conn) {
       $bid_price = $bid_prices[$i];
       echo "<br>";
       $sql = "SELECT id, unfilled, volume FROM order_list WHERE (price = '$bid_price' and all_filled = 0)and request = 'buy'";
-      $result = mysqli_query($conn, $sql);
+      $result = sqlsrv_query($conn, $sql);
       unset($ids);
       unset($unfilled);
       unset($volumes);
@@ -356,9 +356,9 @@ function Limit_order_sell($request, $price, $volume, $user, $conn) {
         if($count >= $unfilled[$j]){
           $count = $count-$unfilled[$j];
           $sql_update_order_list = "UPDATE order_list SET filled = '$volumes[$j]', unfilled = 0, all_filled = 1 WHERE id = '$ids[$j]'";
-          mysqli_query($conn, $sql_update_order_list);
+          sqlsrv_query($conn, $sql_update_order_list);
           $sql_update_fill_list = "INSERT INTO fill_list (id1, id2, price, volume)VALUES ('$id', '$ids[$j]', '$bid_prices[$i]', '$unfilled[$j]')";
-          mysqli_query($conn, $sql_update_fill_list);
+          sqlsrv_query($conn, $sql_update_fill_list);
           //成交改bid的量
           echo " ";
           echo "volume change1: ";
@@ -371,9 +371,9 @@ function Limit_order_sell($request, $price, $volume, $user, $conn) {
           $l_count = $unfilled[$j]-$count;
           $filled = $volumes[$j]-$l_count;
           $sql_update_order_list = "UPDATE order_list SET filled = '$filled', unfilled = '$l_count' WHERE id = '$ids[$j]'";
-          mysqli_query($conn, $sql_update_order_list);
+          sqlsrv_query($conn, $sql_update_order_list);
           $sql_update_fill_list = "INSERT INTO fill_list (id1, id2, price, volume)VALUES ('$id', '$ids[$j]', '$bid_prices[$i]', '$count')";
-          mysqli_query($conn, $sql_update_fill_list);
+          sqlsrv_query($conn, $sql_update_fill_list);
           //成交改bid的量
           echo " ";
           echo "volume change2: ";
@@ -388,7 +388,7 @@ function Limit_order_sell($request, $price, $volume, $user, $conn) {
       }
       if ($count==0){
         $sql_update_order_list = "UPDATE order_list SET filled = '$volume', unfilled = 0, all_filled = 1 WHERE id = '$id'";
-        mysqli_query($conn, $sql_update_order_list);
+        sqlsrv_query($conn, $sql_update_order_list);
         break;
       }
     }
@@ -403,16 +403,16 @@ function Limit_order_sell($request, $price, $volume, $user, $conn) {
     else {
       echo "in ask but no same price";
       $sql = "INSERT INTO ask VALUES ('{$price}', '{$volume}')";
-      mysqli_query($conn, $sql);
+      sqlsrv_query($conn, $sql);
     }
   }       
 }
 function IOC_order_sell($request, $volume, $user, $conn){
   $sql = "INSERT INTO order_list (request, price, volume, user, filled, unfilled, all_filled)VALUES ('$request', NULL, '$volume', '$user', 0, '$volume', 0)";
-  mysqli_query($conn, $sql);
+  sqlsrv_query($conn, $sql);
   echo "hello";
   $sql = "SELECT id FROM order_list ORDER BY id DESC LIMIT 1";
-  $result = mysqli_query($conn, $sql);
+  $result = sqlsrv_query($conn, $sql);
   if ($result) {
     // mysqli_num_rows方法可以回傳我們結果總共有幾筆資料
     if (mysqli_num_rows($result)>0) {
@@ -449,7 +449,7 @@ function IOC_order_sell($request, $volume, $user, $conn){
     $bid_price = $bid_prices[$i];
     echo "<br>";
     $sql = "SELECT id, unfilled, volume FROM order_list WHERE (price = '$bid_price' and all_filled = 0)and request = 'buy'";
-    $result = mysqli_query($conn, $sql);
+    $result = sqlsrv_query($conn, $sql);
     unset($ids);
     unset($unfilled);
     unset($volumes);
@@ -481,9 +481,9 @@ function IOC_order_sell($request, $volume, $user, $conn){
       if($count >= $unfilled[$j]){
         $count = $count-$unfilled[$j];
         $sql_update_order_list = "UPDATE order_list SET filled = '$volumes[$j]', unfilled = 0, all_filled = 1 WHERE id = '$ids[$j]'";
-        mysqli_query($conn, $sql_update_order_list);
+        sqlsrv_query($conn, $sql_update_order_list);
         $sql_update_fill_list = "INSERT INTO fill_list (id1, id2, price, volume)VALUES ('$id', '$ids[$j]', '$bid_prices[$i]', '$unfilled[$j]')";
-        mysqli_query($conn, $sql_update_fill_list);
+        sqlsrv_query($conn, $sql_update_fill_list);
         $total_volume+=$unfilled[$j];
         //成交改bid的量
         echo " ";
@@ -497,9 +497,9 @@ function IOC_order_sell($request, $volume, $user, $conn){
         $l_count = $unfilled[$j]-$count;
         $filled = $volumes[$j]-$l_count;
         $sql_update_order_list = "UPDATE order_list SET filled = '$filled', unfilled = '$l_count' WHERE id = '$ids[$j]'";
-        mysqli_query($conn, $sql_update_order_list);
+        sqlsrv_query($conn, $sql_update_order_list);
         $sql_update_fill_list = "INSERT INTO fill_list (id1, id2, price, volume)VALUES ('$id', '$ids[$j]', '$bid_prices[$i]', '$count')";
-        mysqli_query($conn, $sql_update_fill_list);
+        sqlsrv_query($conn, $sql_update_fill_list);
         $total_volume+=$count;
         //成交改bid的量
         echo " ";
@@ -515,19 +515,19 @@ function IOC_order_sell($request, $volume, $user, $conn){
     }
     if ($count==0){
       $sql_update_order_list = "UPDATE order_list SET filled = '$volume', unfilled = 0, all_filled = 1 WHERE id = '$id'";
-      mysqli_query($conn, $sql_update_order_list);
+      sqlsrv_query($conn, $sql_update_order_list);
       break;
     }
   }
   if($count != 0){
     $sql_update_order_list = "UPDATE order_list SET filled = '$total_volume', unfilled = 0, all_filled = 1 WHERE id = '$id'";
-    mysqli_query($conn, $sql_update_order_list);
+    sqlsrv_query($conn, $sql_update_order_list);
   }
   echo "end";
 }
 function Get_Bid_Data($conn){
   $sql = "SELECT * FROM bid ORDER BY price DESC ";
-  $result = mysqli_query($conn, $sql);
+  $result = sqlsrv_query($conn, $sql);
   if ($result) {
     // mysqli_num_rows方法可以回傳我們結果總共有幾筆資料
     if (mysqli_num_rows($result)>0) {
@@ -547,7 +547,7 @@ function Get_Bid_Data($conn){
 }
 function Get_Ask_Data($conn){
   $sql = "SELECT * FROM ask ORDER BY price ASC";
-  $result = mysqli_query($conn, $sql);
+  $result = sqlsrv_query($conn, $sql);
   // 如果有資料
   if ($result) {
     // mysqli_num_rows方法可以回傳我們結果總共有幾筆資料
@@ -575,11 +575,11 @@ function Edit_Ask_Volume($price, $volume_change, $conn){
   $volume = $ask_volumes[array_search($price, $ask_prices)]+$volume_change;
   if ($volume == 0){
     $sql = "DELETE FROM ask WHERE price = '$price'";
-    mysqli_query($conn, $sql);
+    sqlsrv_query($conn, $sql);
   }
   else {
     $sql = "UPDATE ask SET volume = '$volume' WHERE price = '$price'";
-    mysqli_query($conn, $sql);
+    sqlsrv_query($conn, $sql);
   }
 }
 function Edit_Bid_Volume($price, $volume_change, $conn){
@@ -589,11 +589,11 @@ function Edit_Bid_Volume($price, $volume_change, $conn){
   $volume = $bid_volumes[array_search($price, $bid_prices)]+$volume_change;
   if ($volume == 0){
     $sql = "DELETE FROM bid WHERE price = '$price'";
-    mysqli_query($conn, $sql);
+    sqlsrv_query($conn, $sql);
   }
   else {
     $sql = "UPDATE bid SET volume = '$volume' WHERE price = '$price'";
-    mysqli_query($conn, $sql);
+    sqlsrv_query($conn, $sql);
   }
 }
 $conn->close();

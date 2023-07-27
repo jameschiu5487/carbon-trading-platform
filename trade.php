@@ -5,26 +5,26 @@
         $user = $_SESSION['useruid'];
     }
     $query = "SELECT * from order_list where user = '$user' ORDER BY id DESC";
-    $result = mysqli_query($conn, $query);
+    $result = sqlsrv_query($conn, $query);
 
     $query1 = "SELECT price FROM fill_list ORDER BY filled_order_id DESC";
-    $result1 = mysqli_query($conn, $query1);
+    $result1 = sqlsrv_query($conn, $query1);
 
     $sql = "SELECT order_list.request, fill_list.time, order_list.id, fill_list.price, fill_list.volume
             FROM fill_list
             INNER JOIN order_list
             ON order_list.user = '$user' AND (fill_list.id1 = order_list.id OR fill_list.id2 = order_list.id)
             ORDER BY fill_list.filled_order_id DESC";
-    $result2 = mysqli_query($conn, $sql);
+    $result2 = sqlsrv_query($conn, $sql);
 
     $sql_bid = "SELECT * FROM bid ORDER BY price DESC";
-    $result_bid = mysqli_query($conn, $sql_bid);
+    $result_bid = sqlsrv_query($conn, $sql_bid);
 
     $sql_ask = "SELECT * FROM ask ORDER BY price ASC";
-    $result_ask = mysqli_query($conn, $sql_ask); 
+    $result_ask = sqlsrv_query($conn, $sql_ask); 
 
     $query2 = "SELECT usersEmission FROM users where usersName = '$user' ";
-    $result3 = mysqli_query($conn, $query2);
+    $result3 = sqlsrv_query($conn, $query2);
 ?>
 
 <!DOCTYPE html>

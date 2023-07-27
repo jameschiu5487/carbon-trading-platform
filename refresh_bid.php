@@ -2,7 +2,7 @@
     session_start();
     require_once 'includes/dbh.inc.php';
     $sql_bid = "SELECT * FROM bid ORDER BY price DESC";
-    $result_bid = mysqli_query($conn, $sql_bid);
+    $result_bid = sqlsrv_query($conn, $sql_bid);
     $bid_volumes_sum = 0;
     if ($result_bid) {
         if (mysqli_num_rows($result_bid)>0) {
