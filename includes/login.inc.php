@@ -14,7 +14,7 @@
                 INNER JOIN order_list
                 ON order_list.user = '$user' AND (fill_list.id1 = order_list.id OR fill_list.id2 = order_list.id)
                 ORDER BY fill_list.filled_order_id DESC";
-        $result2 = mysqli_query($conn, $sql);
+        $result2 = sqlsrv_query($conn, $sql);
         print_r($result2);
         if (mysqli_num_rows($result2)>0) {
             echo  "!!!";

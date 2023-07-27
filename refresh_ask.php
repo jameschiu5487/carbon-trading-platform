@@ -2,7 +2,7 @@
     session_start();
     require_once 'includes/dbh.inc.php';
     $sql_ask = "SELECT * FROM ask ORDER BY price ASC";
-    $result_ask = mysqli_query($conn, $sql_ask);
+    $result_ask = sqlsrv_query($conn, $sql_ask);
     $ask_volumes_sum = 0;
     if ($result_ask) {
         if (mysqli_num_rows($result_ask)>0) {
