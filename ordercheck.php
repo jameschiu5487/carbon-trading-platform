@@ -42,7 +42,7 @@ if (isset($_GET['sell'])){
 }
 
 function Limit_order_buy($request, $price, $volume, $user, $conn) {
-  $sql = "INSERT INTO order_list (request, price, volume, user, filled, unfilled, all_filled)VALUES ('$request', '$price', '$volume', '$user', 0, '$volume', 0)";
+  $sql = "INSERT INTO order_list (request, price, volume, username, filled, unfilled, all_filled)VALUES ('$request', '$price', '$volume', '$user', 0, '$volume', 0)";
   sqlsrv_query($conn, $sql);
   $sql = "SELECT id FROM order_list ORDER BY id DESC LIMIT 1";
   $result = sqlsrv_query($conn, $sql);
@@ -191,7 +191,7 @@ function Limit_order_buy($request, $price, $volume, $user, $conn) {
   }     
 }
 function IOC_order_buy($request, $volume, $user, $conn){
-  $sql = "INSERT INTO order_list (request, price, volume, user, filled, unfilled, all_filled)VALUES ('$request', NULL, '$volume', '$user', 0, '$volume', 0)";
+  $sql = "INSERT INTO order_list (request, price, volume, username, filled, unfilled, all_filled)VALUES ('$request', NULL, '$volume', '$user', 0, '$volume', 0)";
   sqlsrv_query($conn, $sql);
   $sql = "SELECT id FROM order_list ORDER BY id DESC LIMIT 1";
   $result = sqlsrv_query($conn, $sql);
@@ -319,7 +319,7 @@ function IOC_order_buy($request, $volume, $user, $conn){
   }
 }
 function Limit_order_sell($request, $price, $volume, $user, $conn) {
-  $sql = "INSERT INTO order_list (request, price, volume, user, filled, unfilled, all_filled)VALUES ('$request', '$price', '$volume', '$user', 0, '$volume', 0)";
+  $sql = "INSERT INTO order_list (request, price, volume, username, filled, unfilled, all_filled)VALUES ('$request', '$price', '$volume', '$user', 0, '$volume', 0)";
   sqlsrv_query($conn, $sql);
   $sql = "SELECT id FROM order_list ORDER BY id DESC LIMIT 1";
   $result = sqlsrv_query($conn, $sql);
@@ -469,7 +469,7 @@ function Limit_order_sell($request, $price, $volume, $user, $conn) {
   }
 }
 function IOC_order_sell($request, $volume, $user, $conn){
-  $sql = "INSERT INTO order_list (request, price, volume, user, filled, unfilled, all_filled)VALUES ('$request', NULL, '$volume', '$user', 0, '$volume', 0)";
+  $sql = "INSERT INTO order_list (request, price, volume, username, filled, unfilled, all_filled)VALUES ('$request', NULL, '$volume', '$user', 0, '$volume', 0)";
   sqlsrv_query($conn, $sql);
   $sql = "SELECT id FROM order_list ORDER BY id DESC LIMIT 1";
   $result = sqlsrv_query($conn, $sql);
