@@ -57,7 +57,7 @@
         $sql = "SELECT order_list.request, fill_list.time, order_list.id, fill_list.price, fill_list.volume
                 FROM fill_list
                 INNER JOIN order_list
-                ON order_list.user = :user AND (fill_list.id1 = order_list.id OR fill_list.id2 = order_list.id)
+                ON order_list.username = :user AND (fill_list.id1 = order_list.id OR fill_list.id2 = order_list.id)
                 ORDER BY fill_list.filled_order_id DESC";
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(':user', $user);

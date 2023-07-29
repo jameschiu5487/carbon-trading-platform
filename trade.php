@@ -4,7 +4,7 @@
     if(isset($_SESSION["useruid"])){
         $user = $_SESSION['useruid'];
     }
-    $query = "SELECT * from order_list where user = '$user' ORDER BY id DESC";
+    $query = "SELECT * from order_list where username = '$user' ORDER BY id DESC";
     $result = sqlsrv_query($conn, $query);
 
     $query1 = "SELECT price FROM fill_list ORDER BY filled_order_id DESC";
@@ -13,7 +13,7 @@
     $sql = "SELECT order_list.request, fill_list.time, order_list.id, fill_list.price, fill_list.volume
             FROM fill_list
             INNER JOIN order_list
-            ON order_list.user = '$user' AND (fill_list.id1 = order_list.id OR fill_list.id2 = order_list.id)
+            ON order_list.username = '$user' AND (fill_list.id1 = order_list.id OR fill_list.id2 = order_list.id)
             ORDER BY fill_list.filled_order_id DESC";
     $result2 = sqlsrv_query($conn, $sql);
 
@@ -139,7 +139,8 @@
                             </tr>
                             <tr>
                             <?php
-                                    while($row = mysqli_fetch_assoc($result))
+                                    // while($row = mysqli_fetch_assoc($result))
+                                    while ($row = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC)) 
                                     {
                                 ?>
                                     <td><?php echo $row['id']; ?></td>
@@ -170,7 +171,8 @@
                     </tr>
                     <tr>
                         <?php
-                            while($row = mysqli_fetch_assoc($result2))
+                            // while($row = mysqli_fetch_assoc($result2))
+                            while ($row = sqlsrv_fetch_array($result2, SQLSRV_FETCH_ASSOC))
                             {
                         ?>
                             <td><?php echo $row['id']; ?></td>
@@ -191,7 +193,8 @@
             <section class="order">
                 <div class="possession" id="possess">
                     <?php
-                        if($row = mysqli_fetch_assoc($result3))
+                        // if($row = mysqli_fetch_assoc($result3))
+                        if($row = sqlsrv_fetch_array($result3, SQLSRV_FETCH_ASSOC)) 
                         {
                     ?>
                         <p><?php echo "Credit : ".$row['usersEmission']; ?></p>
@@ -247,8 +250,10 @@
                         <?php
                             $ask_volumes_sum = 0;
                             if ($result_ask) {
-                                if (mysqli_num_rows($result_ask)>0) {
-                                    while ($row = mysqli_fetch_assoc($result_ask)) {
+                                // if (mysqli_num_rows($result_ask)>0) {
+                                //     while ($row = mysqli_fetch_assoc($result_ask)) {
+                                if(sqlsrv_has_rows($result_ask)){
+                                    while ($row = sqlsrv_fetch_array($result_ask, SQLSRV_FETCH_ASSOC)){
                                         $ask_volumes[] = $row['volume'];
                                         $ask_prices[] = $row['price'];
                                     }
@@ -274,7 +279,8 @@
                     </div>
                     <div id="market-price">
                         <?php
-                            if($row = mysqli_fetch_assoc($result1))
+                            // if($row = mysqli_fetch_assoc($result1))
+                            if($row = sqlsrv_fetch_array($result1, SQLSRV_FETCH_ASSOC)) 
                             {
                         ?>
                             <p><?php echo "Market Price : $".$row['price']; ?></p>
@@ -287,8 +293,10 @@
                         <?php
                             $bid_volumes_sum = 0;
                             if ($result_bid) {
-                                if (mysqli_num_rows($result_bid)>0) {
-                                    while ($row = mysqli_fetch_assoc($result_bid)) {
+                                // if (mysqli_num_rows($result_bid)>0) {
+                                //     while ($row = mysqli_fetch_assoc($result_bid)) {
+                                if(sqlsrv_has_rows($result_bid)){
+                                    while ($row = sqlsrv_fetch_array($result_bid, SQLSRV_FETCH_ASSOC)){
                                         $bid_volumes[] = $row['volume'];
                                         $bid_prices[] = $row['price'];
                                     }

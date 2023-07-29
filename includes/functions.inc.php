@@ -278,16 +278,20 @@ function changePassword($conn, $username, $pwd) {
 }
 
 function db_check(){
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
-
     try {
-        $conn = new PDO("mysql:host=$servername;dbname=carbon_trading_website", $username, $password);
+        $conn = new PDO("sqlsrv:server = tcp:carbon-trading.database.windows.net,1433; Database = carbon-trading", "IMFteam", "NYCUimf5487");
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        return $conn;
-    } catch (PDOException $e) {
-        echo "Connection failed: " . $e->getMessage();
-        die();
     }
+    catch (PDOException $e) {
+        print("Error connecting to SQL Server.");
+        die(print_r($e));
+    }
+    
+    // SQL Server Extension Sample Code:
+    $connectionInfo = array("UID" => "IMFteam", "pwd" => "NYCUimf5487", "Database" => "carbon-trading", "LoginTimeout" => 30, "Encrypt" => 1, "TrustServerCertificate" => 0);
+    $serverName = "tcp:carbon-trading.database.windows.net,1433";
+    $conn = sqlsrv_connect($serverName, $connectionInfo);
+    return $conn;
 }
+
+
