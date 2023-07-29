@@ -62,7 +62,7 @@
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(':user', $user);
         $stmt->execute();
-        $result2 = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $result2 = $stmt->fetchAll(PDO::SQLSRV_FETCH_ASSOC);
         print_r($result2);
 
         if (count($result2) > 0) {
