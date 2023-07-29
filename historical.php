@@ -4,7 +4,7 @@
     if(isset($_SESSION["useruid"])){
         $user = $_SESSION['useruid'];
     }
-    $query = "SELECT * from order_list where user = '$user' ORDER BY id DESC";
+    $query = "SELECT * from order_list where username = '$user' ORDER BY id DESC";
     $result = sqlsrv_query($conn, $query);
     // 根據資料建立表格的HTML內容
     $html = '<table class="historical-data" id="historical">';

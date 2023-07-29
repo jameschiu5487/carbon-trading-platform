@@ -4,7 +4,7 @@
     if(isset($_SESSION["useruid"])){
         $user = $_SESSION['useruid'];
     }
-    $query = "SELECT * from order_list where user = '$user' ORDER BY id DESC";
+    $query = "SELECT * from order_list where username = '$user' ORDER BY id DESC";
     $result = sqlsrv_query($conn, $query);
 
     $query1 = "SELECT price FROM fill_list ORDER BY filled_order_id DESC";
@@ -13,7 +13,7 @@
     $sql = "SELECT order_list.request, fill_list.time, order_list.id, fill_list.price, fill_list.volume
             FROM fill_list
             INNER JOIN order_list
-            ON order_list.user = '$user' AND (fill_list.id1 = order_list.id OR fill_list.id2 = order_list.id)
+            ON order_list.username = '$user' AND (fill_list.id1 = order_list.id OR fill_list.id2 = order_list.id)
             ORDER BY fill_list.filled_order_id DESC";
     $result2 = sqlsrv_query($conn, $sql);
 
