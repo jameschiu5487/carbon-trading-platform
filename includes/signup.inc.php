@@ -7,6 +7,11 @@ if(isset($_POST["submit"])){
     $industry = $_POST["industry"];
     $pwd = $_POST["pwd"];
     $pwdrepeat = $_POST["pwdrepeat"];
+    echo $username;
+    echo $emission;
+    echo $industry;
+    echo $pwd;
+    echo $pwdrepeat;
 
     require_once 'dbh.inc.php';
     require_once 'functions.inc.php';
