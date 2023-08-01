@@ -210,7 +210,7 @@ function emptyInputLogin($username, $pwd){
 }
 
 function loginUser($conn, $username, $pwd){
-
+    echo "login user";
     $uidExists = uidExists($conn, $username);
 
     if(!$uidExists){
@@ -240,6 +240,7 @@ function uidExists($conn, $username){
     $stmt->execute();
 
     $resultData = $stmt->fetch(PDO::FETCH_ASSOC);
+    echo "uidexists end";
     return $resultData ? $resultData : false;
 }
 
