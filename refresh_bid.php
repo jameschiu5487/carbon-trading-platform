@@ -5,11 +5,9 @@
     $result_bid = sqlsrv_query($conn, $sql_bid);
     $bid_volumes_sum = 0;
     if ($result_bid) {
-        if (mysqli_num_rows($result_bid)>0) {
-            while ($row = mysqli_fetch_assoc($result_bid)) {
-                $bid_volumes[] = $row['volume'];
-                $bid_prices[] = $row['price'];
-            }
+        while ($row = sqlsrv_fetch_array($result_bid, SQLSRV_FETCH_ASSOC)) {
+            $bid_volumes[] = $row['volume'];
+            $bid_prices[] = $row['price'];
         }
     }
     for($i=0; $i<=4; $i++)

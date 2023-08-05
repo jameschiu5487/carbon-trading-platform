@@ -5,13 +5,13 @@
     $result_ask = sqlsrv_query($conn, $sql_ask);
     $ask_volumes_sum = 0;
     if ($result_ask) {
-        if (mysqli_num_rows($result_ask)>0) {
-            while ($row = mysqli_fetch_assoc($result_ask)) {
-                $ask_volumes[] = $row['volume'];
-                $ask_prices[] = $row['price'];
-            }
+        while ($row = sqlsrv_fetch_array($result_ask, SQLSRV_FETCH_ASSOC)) {
+            $ask_volumes[] = $row['volume'];
+            $ask_prices[] = $row['price'];
         }
+        
     }
+
     for($i=4; $i>=0; $i--)
     {
         $ask_volumes_sum += $ask_volumes[$i];
