@@ -229,7 +229,7 @@ function loginUser($conn, $username, $pwd){
         session_start();
         $_SESSION["userid"] = $uidExists[0]["usersID"];
         $_SESSION["useruid"] = $uidExists[0]["usersName"];
-        header("location: ../trade.php");
+        header("location: trade.php");
         exit();
     }
 }
