@@ -4,6 +4,9 @@
     if(isset($_SESSION["useruid"])){
         $user = $_SESSION['useruid'];
     }
+    else{
+        echo "no user found";
+    }
     $query = "SELECT * from order_list where username = '$user' ORDER BY id DESC";
     $result = sqlsrv_query($conn, $query);
 
@@ -142,9 +145,11 @@
                                     // while($row = mysqli_fetch_assoc($result))
                                     while ($row = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC)) 
                                     {
+                                        $dateTimeObject = $row['time1']; // Assuming you have a DateTime object
+                                        $timestampString = (string) $dateTimeObject->getTimestamp();
                                 ?>
                                     <td><?php echo $row['id']; ?></td>
-                                    <td><?php echo $row['time1']; ?></td>
+                                    <td><?php echo $timestampString; ?></td>
                                     <td><?php echo $row['request']; ?></td>
                                     <td><?php echo $row['volume']; ?></td>
                                     <td><?php if($row['price'] == NULL){echo "Market Price";} else{echo $row['price'];} ?></td>
@@ -174,9 +179,11 @@
                             // while($row = mysqli_fetch_assoc($result2))
                             while ($row = sqlsrv_fetch_array($result2, SQLSRV_FETCH_ASSOC))
                             {
+                                $dateTimeObject = $row['time']; // Assuming you have a DateTime object
+                                $timestampString = (string) $dateTimeObject->getTimestamp();
                         ?>
                             <td><?php echo $row['id']; ?></td>
-                            <td><?php echo $row['time']; ?></td>
+                            <td><?php echo $timestampString; ?></td>
                             <td><?php echo $row['request']; ?></td>
                             <td><?php echo $row['volume']; ?></td>
                             <td><?php echo $row['price']; ?></td>

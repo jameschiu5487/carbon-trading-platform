@@ -42,24 +42,20 @@ if (isset($_GET['sell'])){
 }
 
 function Limit_order_buy($request, $price, $volume, $user, $conn) {
-  $sql = "INSERT INTO order_list (request, price, volume, username, filled, unfilled, all_filled)VALUES ('$request', '$price', '$volume', '$user', 0, '$volume', 0)";
+  $sql = "INSERT INTO order_list (time1, request, price, volume, username, filled, unfilled, all_filled)VALUES (GETDATE(), '$request', '$price', '$volume', '$user', 0, '$volume', 0)";
   sqlsrv_query($conn, $sql);
-  $sql = "SELECT id FROM order_list ORDER BY id DESC LIMIT 1";
+  $sql = "SELECT TOP 1 id FROM order_list ORDER BY id DESC";
   $result = sqlsrv_query($conn, $sql);
   if ($result) {
     // mysqli_num_rows方法可以回傳我們結果總共有幾筆資料
-    if (mysqli_num_rows($result)>0) {
-        // 取得大於0代表有資料
-        // while迴圈會根據資料數量，決定跑的次數
-        // mysqli_fetch_assoc方法可取得一筆值
-        while ($row = mysqli_fetch_assoc($result)) {
-            // 每跑一次迴圈就抓一筆值，最後放進data陣列中
-            $id = $row['id'];
-        }
+    while ($row = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC)) {
+        // 每跑一次迴圈就抓一筆值，最後放進data陣列中
+        $id = $row['id'];
     }
     // 釋放資料庫查到的記憶體
-    mysqli_free_result($result);
+    sqlsrv_free_stmt($result);
   }
+  echo $id;
   //拿ask data
   $array_ask = Get_Ask_Data($conn);
   $flag_ask = $array_ask[2];
@@ -91,20 +87,15 @@ function Limit_order_buy($request, $price, $volume, $user, $conn) {
         unset($volumes);
         if ($result) {
           // mysqli_num_rows方法可以回傳我們結果總共有幾筆資料
-          if (mysqli_num_rows($result)>0) {
-              // 取得大於0代表有資料
-              // while迴圈會根據資料數量，決定跑的次數
-              // mysqli_fetch_assoc方法可取得一筆值
-              while ($row = mysqli_fetch_assoc($result)) {
-                  // 每跑一次迴圈就抓一筆值，最後放進data陣列中
-                  $time[] = $row['time1'];
-                  $ids[] = $row['id'];
-                  $unfilled[] = $row['unfilled'];
-                  $volumes[] = $row['volume'];
-              }
+          while ($row = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC)) {
+              // 每跑一次迴圈就抓一筆值，最後放進data陣列中
+              $time[] = $row['time1'];
+              $ids[] = $row['id'];
+              $unfilled[] = $row['unfilled'];
+              $volumes[] = $row['volume'];
           }
           // 釋放資料庫查到的記憶體
-          mysqli_free_result($result);
+          sqlsrv_free_stmt($result);
         }
         print_r($time);
         echo "<br>";
@@ -121,7 +112,7 @@ function Limit_order_buy($request, $price, $volume, $user, $conn) {
             $count = $count-$unfilled[$j];
             $sql_update_order_list = "UPDATE order_list SET filled = '$volumes[$j]', unfilled = 0, all_filled = 1 WHERE id = '$ids[$j]'";
             sqlsrv_query($conn, $sql_update_order_list);
-            $sql_update_fill_list = "INSERT INTO fill_list (id1, id2, price, volume)VALUES ('$id', '$ids[$j]', '$ask_prices[$i]', '$unfilled[$j]')";
+            $sql_update_fill_list = "INSERT INTO fill_list (time, id1, id2, price, volume)VALUES (GETDATE(), '$id', '$ids[$j]', '$ask_prices[$i]', '$unfilled[$j]')";
             sqlsrv_query($conn, $sql_update_fill_list);
             //成交改ask的量
             echo " ";
@@ -136,7 +127,7 @@ function Limit_order_buy($request, $price, $volume, $user, $conn) {
             $filled = $volumes[$j]-$l_count;
             $sql_update_order_list = "UPDATE order_list SET filled = '$filled', unfilled = '$l_count' WHERE id = '$ids[$j]'";
             sqlsrv_query($conn, $sql_update_order_list);
-            $sql_update_fill_list = "INSERT INTO fill_list (id1, id2, price, volume)VALUES ('$id', '$ids[$j]', '$ask_prices[$i]', '$count')";
+            $sql_update_fill_list = "INSERT INTO fill_list (time, id1, id2, price, volume)VALUES (GETDATE(), '$id', '$ids[$j]', '$ask_prices[$i]', '$count')";
             sqlsrv_query($conn, $sql_update_fill_list);
             //成交改ask的量
             echo " ";
@@ -191,23 +182,18 @@ function Limit_order_buy($request, $price, $volume, $user, $conn) {
   }     
 }
 function IOC_order_buy($request, $volume, $user, $conn){
-  $sql = "INSERT INTO order_list (request, price, volume, username, filled, unfilled, all_filled)VALUES ('$request', NULL, '$volume', '$user', 0, '$volume', 0)";
+  $sql = "INSERT INTO order_list (time1, request, price, volume, username, filled, unfilled, all_filled)VALUES (GETDATE(), '$request', NULL, '$volume', '$user', 0, '$volume', 0)";
   sqlsrv_query($conn, $sql);
-  $sql = "SELECT id FROM order_list ORDER BY id DESC LIMIT 1";
+  $sql = "SELECT TOP 1 id FROM order_list ORDER BY id DESC";
   $result = sqlsrv_query($conn, $sql);
   if ($result) {
     // mysqli_num_rows方法可以回傳我們結果總共有幾筆資料
-    if (mysqli_num_rows($result)>0) {
-        // 取得大於0代表有資料
-        // while迴圈會根據資料數量，決定跑的次數
-        // mysqli_fetch_assoc方法可取得一筆值
-        while ($row = mysqli_fetch_assoc($result)) {
-            // 每跑一次迴圈就抓一筆值，最後放進data陣列中
-            $id = $row['id'];
-        }
+    while ($row = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC)) {
+        // 每跑一次迴圈就抓一筆值，最後放進data陣列中
+        $id = $row['id'];
     }
     // 釋放資料庫查到的記憶體
-    mysqli_free_result($result);
+    sqlsrv_free_stmt($result);
   }
   //拿ask data
   $array_ask = Get_Ask_Data($conn);
@@ -239,20 +225,15 @@ function IOC_order_buy($request, $volume, $user, $conn){
       unset($volumes);
       if ($result) {
         // mysqli_num_rows方法可以回傳我們結果總共有幾筆資料
-        if (mysqli_num_rows($result)>0) {
-            // 取得大於0代表有資料
-            // while迴圈會根據資料數量，決定跑的次數
-            // mysqli_fetch_assoc方法可取得一筆值
-            while ($row = mysqli_fetch_assoc($result)) {
-                // 每跑一次迴圈就抓一筆值，最後放進data陣列中
-                $time = $row['time1'];
-                $ids[] = $row['id'];
-                $unfilled[] = $row['unfilled'];
-                $volumes[] = $row['volume'];
-            }
-        }
+          while ($row = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC)) {
+              // 每跑一次迴圈就抓一筆值，最後放進data陣列中
+              $time = $row['time1'];
+              $ids[] = $row['id'];
+              $unfilled[] = $row['unfilled'];
+              $volumes[] = $row['volume'];
+          }
         // 釋放資料庫查到的記憶體
-        mysqli_free_result($result);
+        sqlsrv_free_stmt($result);
       }
       print_r($time);
       echo "<br>";
@@ -269,7 +250,7 @@ function IOC_order_buy($request, $volume, $user, $conn){
           $count = $count-$unfilled[$j];
           $sql_update_order_list = "UPDATE order_list SET filled = '$volumes[$j]', unfilled = 0, all_filled = 1 WHERE id = '$ids[$j]'";
           sqlsrv_query($conn, $sql_update_order_list);
-          $sql_update_fill_list = "INSERT INTO fill_list (id1, id2, price, volume)VALUES ('$id', '$ids[$j]', '$ask_prices[$i]', '$unfilled[$j]')";
+          $sql_update_fill_list = "INSERT INTO fill_list (time, id1, id2, price, volume)VALUES (GETDATE(), '$id', '$ids[$j]', '$ask_prices[$i]', '$unfilled[$j]')";
           sqlsrv_query($conn, $sql_update_fill_list);
           $total_volume+=$unfilled[$j];
           //成交改ask的量
@@ -285,7 +266,7 @@ function IOC_order_buy($request, $volume, $user, $conn){
           $filled = $volumes[$j]-$l_count;
           $sql_update_order_list = "UPDATE order_list SET filled = '$filled', unfilled = '$l_count' WHERE id = '$ids[$j]'";
           sqlsrv_query($conn, $sql_update_order_list);
-          $sql_update_fill_list = "INSERT INTO fill_list (id1, id2, price, volume)VALUES ('$id', '$ids[$j]', '$ask_prices[$i]', '$count')";
+          $sql_update_fill_list = "INSERT INTO fill_list (time, id1, id2, price, volume)VALUES (GETDATE(), '$id', '$ids[$j]', '$ask_prices[$i]', '$count')";
           sqlsrv_query($conn, $sql_update_fill_list);
           $total_volume+=$count;
           //成交改ask的量
@@ -319,23 +300,18 @@ function IOC_order_buy($request, $volume, $user, $conn){
   }
 }
 function Limit_order_sell($request, $price, $volume, $user, $conn) {
-  $sql = "INSERT INTO order_list (request, price, volume, username, filled, unfilled, all_filled)VALUES ('$request', '$price', '$volume', '$user', 0, '$volume', 0)";
+  $sql = "INSERT INTO order_list (time1, request, price, volume, username, filled, unfilled, all_filled)VALUES (GETDATE(), '$request', '$price', '$volume', '$user', 0, '$volume', 0)";
   sqlsrv_query($conn, $sql);
-  $sql = "SELECT id FROM order_list ORDER BY id DESC LIMIT 1";
+  $sql = "SELECT TOP 1 id FROM order_list ORDER BY id DESC";
   $result = sqlsrv_query($conn, $sql);
   if ($result) {
     // mysqli_num_rows方法可以回傳我們結果總共有幾筆資料
-    if (mysqli_num_rows($result)>0) {
-        // 取得大於0代表有資料
-        // while迴圈會根據資料數量，決定跑的次數
-        // mysqli_fetch_assoc方法可取得一筆值
-        while ($row = mysqli_fetch_assoc($result)) {
-            // 每跑一次迴圈就抓一筆值，最後放進data陣列中
-            $id = $row['id'];
-        }
+    while ($row = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC)) {
+        // 每跑一次迴圈就抓一筆值，最後放進data陣列中
+        $id = $row['id'];
     }
     // 釋放資料庫查到的記憶體
-    mysqli_free_result($result);
+    sqlsrv_free_stmt($result);
   }
   //拿ask data
   $array_ask = Get_Ask_Data($conn);
@@ -368,20 +344,15 @@ function Limit_order_sell($request, $price, $volume, $user, $conn) {
         unset($volumes);
         if ($result) {
           // mysqli_num_rows方法可以回傳我們結果總共有幾筆資料
-          if (mysqli_num_rows($result)>0) {
-              // 取得大於0代表有資料
-              // while迴圈會根據資料數量，決定跑的次數
-              // mysqli_fetch_assoc方法可取得一筆值
-              while ($row = mysqli_fetch_assoc($result)) {
-                  // 每跑一次迴圈就抓一筆值，最後放進data陣列中
-                  $time = $row['time1'];
-                  $ids[] = $row['id'];
-                  $unfilled[] = $row['unfilled'];
-                  $volumes[] = $row['volume'];
-              }
+          while ($row = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC)) {
+              // 每跑一次迴圈就抓一筆值，最後放進data陣列中
+              $time = $row['time1'];
+              $ids[] = $row['id'];
+              $unfilled[] = $row['unfilled'];
+              $volumes[] = $row['volume'];
           }
           // 釋放資料庫查到的記憶體
-          mysqli_free_result($result);
+          sqlsrv_free_stmt($result);
         }
         print_r($time);
         echo "<br>";
@@ -398,7 +369,7 @@ function Limit_order_sell($request, $price, $volume, $user, $conn) {
             $count = $count-$unfilled[$j];
             $sql_update_order_list = "UPDATE order_list SET filled = '$volumes[$j]', unfilled = 0, all_filled = 1 WHERE id = '$ids[$j]'";
             sqlsrv_query($conn, $sql_update_order_list);
-            $sql_update_fill_list = "INSERT INTO fill_list (id1, id2, price, volume)VALUES ('$id', '$ids[$j]', '$bid_prices[$i]', '$unfilled[$j]')";
+            $sql_update_fill_list = "INSERT INTO fill_list (time, id1, id2, price, volume)VALUES (GETDATE(), '$id', '$ids[$j]', '$bid_prices[$i]', '$unfilled[$j]')";
             sqlsrv_query($conn, $sql_update_fill_list);
             //成交改bid的量
             echo " ";
@@ -413,7 +384,7 @@ function Limit_order_sell($request, $price, $volume, $user, $conn) {
             $filled = $volumes[$j]-$l_count;
             $sql_update_order_list = "UPDATE order_list SET filled = '$filled', unfilled = '$l_count' WHERE id = '$ids[$j]'";
             sqlsrv_query($conn, $sql_update_order_list);
-            $sql_update_fill_list = "INSERT INTO fill_list (id1, id2, price, volume)VALUES ('$id', '$ids[$j]', '$bid_prices[$i]', '$count')";
+            $sql_update_fill_list = "INSERT INTO fill_list (time, id1, id2, price, volume)VALUES (GETDATE(), '$id', '$ids[$j]', '$bid_prices[$i]', '$count')";
             sqlsrv_query($conn, $sql_update_fill_list);
             //成交改bid的量
             echo " ";
@@ -469,23 +440,18 @@ function Limit_order_sell($request, $price, $volume, $user, $conn) {
   }
 }
 function IOC_order_sell($request, $volume, $user, $conn){
-  $sql = "INSERT INTO order_list (request, price, volume, username, filled, unfilled, all_filled)VALUES ('$request', NULL, '$volume', '$user', 0, '$volume', 0)";
+  $sql = "INSERT INTO order_list (time1, request, price, volume, username, filled, unfilled, all_filled)VALUES (GETDATE(), '$request', NULL, '$volume', '$user', 0, '$volume', 0)";
   sqlsrv_query($conn, $sql);
-  $sql = "SELECT id FROM order_list ORDER BY id DESC LIMIT 1";
+  $sql = "SELECT TOP 1 id FROM order_list ORDER BY id DESC";
   $result = sqlsrv_query($conn, $sql);
   if ($result) {
     // mysqli_num_rows方法可以回傳我們結果總共有幾筆資料
-    if (mysqli_num_rows($result)>0) {
-        // 取得大於0代表有資料
-        // while迴圈會根據資料數量，決定跑的次數
-        // mysqli_fetch_assoc方法可取得一筆值
-        while ($row = mysqli_fetch_assoc($result)) {
-            // 每跑一次迴圈就抓一筆值，最後放進data陣列中
-            $id = $row['id'];
-        }
+    while ($row = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC)) {
+        // 每跑一次迴圈就抓一筆值，最後放進data陣列中
+        $id = $row['id'];
     }
     // 釋放資料庫查到的記憶體
-    mysqli_free_result($result);
+    sqlsrv_free_stmt($result);
   }
   //拿ask data
   $array_ask = Get_Ask_Data($conn);
@@ -518,20 +484,15 @@ function IOC_order_sell($request, $volume, $user, $conn){
       unset($volumes);
       if ($result) {
       // mysqli_num_rows方法可以回傳我們結果總共有幾筆資料
-        if (mysqli_num_rows($result)>0) {
-          // 取得大於0代表有資料
-          // while迴圈會根據資料數量，決定跑的次數
-          // mysqli_fetch_assoc方法可取得一筆值
-          while ($row = mysqli_fetch_assoc($result)) {
-            // 每跑一次迴圈就抓一筆值，最後放進data陣列中
-            $time = $row['time1'];
-            $ids[] = $row['id'];
-            $unfilled[] = $row['unfilled'];
-            $volumes[] = $row['volume'];
-              }
-          }
+        while ($row = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC)) {
+          // 每跑一次迴圈就抓一筆值，最後放進data陣列中
+          $time = $row['time1'];
+          $ids[] = $row['id'];
+          $unfilled[] = $row['unfilled'];
+          $volumes[] = $row['volume'];
+            }
           // 釋放資料庫查到的記憶體
-        mysqli_free_result($result);
+          sqlsrv_free_stmt($result);
       }
       print_r($time);
       echo "<br>";
@@ -548,7 +509,7 @@ function IOC_order_sell($request, $volume, $user, $conn){
           $count = $count-$unfilled[$j];
           $sql_update_order_list = "UPDATE order_list SET filled = '$volumes[$j]', unfilled = 0, all_filled = 1 WHERE id = '$ids[$j]'";
           sqlsrv_query($conn, $sql_update_order_list);
-          $sql_update_fill_list = "INSERT INTO fill_list (id1, id2, price, volume)VALUES ('$id', '$ids[$j]', '$bid_prices[$i]', '$unfilled[$j]')";
+          $sql_update_fill_list = "INSERT INTO fill_list (time, id1, id2, price, volume)VALUES (GETDATE(), '$id', '$ids[$j]', '$bid_prices[$i]', '$unfilled[$j]')";
           sqlsrv_query($conn, $sql_update_fill_list);
           $total_volume+=$unfilled[$j];
           //成交改bid的量
@@ -564,7 +525,7 @@ function IOC_order_sell($request, $volume, $user, $conn){
           $filled = $volumes[$j]-$l_count;
           $sql_update_order_list = "UPDATE order_list SET filled = '$filled', unfilled = '$l_count' WHERE id = '$ids[$j]'";
           sqlsrv_query($conn, $sql_update_order_list);
-          $sql_update_fill_list = "INSERT INTO fill_list (id1, id2, price, volume)VALUES ('$id', '$ids[$j]', '$bid_prices[$i]', '$count')";
+          $sql_update_fill_list = "INSERT INTO fill_list (time, id1, id2, price, volume)VALUES (GETDATE(), '$id', '$ids[$j]', '$bid_prices[$i]', '$count')";
           sqlsrv_query($conn, $sql_update_fill_list);
           $total_volume+=$count;
           //成交改bid的量
@@ -602,22 +563,20 @@ function Get_Bid_Data($conn){
   $result = sqlsrv_query($conn, $sql);
   if ($result) {
     // mysqli_num_rows方法可以回傳我們結果總共有幾筆資料
-    if (mysqli_num_rows($result)>0) {
-        // 取得大於0代表有資料
-        // while迴圈會根據資料數量，決定跑的次數
-        // mysqli_fetch_assoc方法可取得一筆值
-        while ($row = mysqli_fetch_assoc($result)) {
-            // 每跑一次迴圈就抓一筆值，最後放進data陣列中
-            $bid_volumes[] = $row['volume'];
-            $bid_prices[] = $row['price'];
-        }
+    while ($row = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC)) {
+        // 每跑一次迴圈就抓一筆值，最後放進data陣列中
+        $bid_volumes[] = $row['volume'];
+        $bid_prices[] = $row['price'];
         $flag = 1;
+    }
+    if ($flag==1){
+      $flag=1;
     }
     else {
       $flag = 0;
     }
     // 釋放資料庫查到的記憶體
-    mysqli_free_result($result);
+    sqlsrv_free_stmt($result);
   }
   return array($bid_prices, $bid_volumes, $flag);
 }
@@ -627,22 +586,20 @@ function Get_Ask_Data($conn){
   // 如果有資料
   if ($result) {
     // mysqli_num_rows方法可以回傳我們結果總共有幾筆資料
-    if (mysqli_num_rows($result)>0) {
-        // 取得大於0代表有資料
-        // while迴圈會根據資料數量，決定跑的次數
-        // mysqli_fetch_assoc方法可取得一筆值
-        while ($row = mysqli_fetch_assoc($result)) {
+        while ($row = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC)) {
             // 每跑一次迴圈就抓一筆值，最後放進data陣列中
             $ask_volumes[] = $row['volume'];
             $ask_prices[] = $row['price'];
+            $flag = 1;
         }
-        $flag = 1;
+    if ($flag==1){
+      $flag=1;
     }
     else {
       $flag = 0;
     }
     // 釋放資料庫查到的記憶體
-    mysqli_free_result($result);
+    sqlsrv_free_stmt($result);
   }
   return array($ask_prices, $ask_volumes, $flag);
 }
@@ -676,7 +633,7 @@ function Edit_Bid_Volume($price, $volume_change, $conn){
     sqlsrv_query($conn, $sql);
   }
 }
-$conn->close();
+sqlsrv_close($conn);
 
 header("Location: trade.php");
 

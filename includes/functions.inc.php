@@ -185,22 +185,22 @@ function pwdMatch($pwd, $pwdrepeat){
 
 function createUser($conn, $username, $emission, $industry, $pwd){
 
-    $sql = "INSERT INTO users (usersName, usersEmission, usersIndustry, usersPwd) VALUES (:username, :emission, :industry, :hashedPwd)";
-    $stmt = $conn->prepare($sql);
+    $hashedPwd = password_hash($pwd, PASSWORD_DEFAULT);
+    $sql = "INSERT INTO users (usersName, usersEmission, usersIndustry, usersPwd) VALUES ('$username', '$emission', '$industry', '$hashedPwd')";
     
+    /*
     if (!$stmt){
         header("location: ../signup.php?error=stmtfailed");
         exit();
     }
-
-    $hashedPwd = password_hash($pwd, PASSWORD_DEFAULT);
-
     $stmt->bindParam(':username', $username);
     $stmt->bindParam(':emission', $emission);
     $stmt->bindParam(':industry', $industry);
     $stmt->bindParam(':hashedPwd', $hashedPwd);
 
     $stmt->execute();
+    */
+    sqlsrv_query($conn, $sql);
     header("location: ../signup.php?error=none");
     exit();
 }
@@ -210,15 +210,16 @@ function emptyInputLogin($username, $pwd){
 }
 
 function loginUser($conn, $username, $pwd){
-
+    echo "login user";
     $uidExists = uidExists($conn, $username);
 
     if(!$uidExists){
         header("location: ../login.php?error=wronglogin");
         exit();
     }
-
-    $pwdHashed = $uidExists["usersPwd"];
+    print_r($uidExists);
+    $pwdHashed = $uidExists[0]['usersPwd'];
+    echo $pwdHashed;
     $checkPwd = password_verify($pwd, $pwdHashed);
 
     if(!$checkPwd){
@@ -226,40 +227,46 @@ function loginUser($conn, $username, $pwd){
     }
     else{
         session_start();
-        $_SESSION["userid"] = $uidExists["usersID"];
-        $_SESSION["useruid"] = $uidExists["usersName"];
+        $_SESSION["userid"] = $uidExists[0]["usersID"];
+        $_SESSION["useruid"] = $uidExists[0]["usersName"];
         header("location: ../trade.php");
         exit();
     }
 }
 
 function uidExists($conn, $username){
-    $sql = "SELECT * FROM users WHERE usersName = :username";
-    $stmt = $conn->prepare($sql);
-    $stmt->bindParam(':username', $username);
-    $stmt->execute();
-
-    $resultData = $stmt->fetch(PDO::FETCH_ASSOC);
-    return $resultData ? $resultData : false;
+    $sql = "SELECT * FROM users WHERE usersName = '$username'";
+    #$stmt = $conn->prepare($sql);
+    #$stmt->bindParam(':username', $username);
+    #$stmt->execute();
+    #$result = $stmt->fetch(PDO::FETCH_ASSOC);
+    $result = sqlsrv_query($conn, $sql);
+    if($result){
+        $data = array();
+        while ($row = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC)) {
+        $data[] = $row;
+        }
+    }
+    echo "uidexists end";
+    return $data ? $data : false;
 }
 
 function corrPassword($conn, $username, $pwd) {
-    $sql = "SELECT * FROM users WHERE usersName = :username";
-    $stmt = $conn->prepare($sql);
-    $stmt->bindParam(':username', $username);
-    $stmt->execute();
-
-    $resultData = $stmt->fetch(PDO::FETCH_ASSOC);
-    if ($resultData) {
-        $pwdHashed = $resultData['usersPwd'];
-        return password_verify($pwd, $pwdHashed);
+    $sql = "SELECT * FROM users WHERE usersName = '$username'";
+    $result = sqlsrv_query($conn, $sql);
+    if ($result) {
+        while ($row = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC)) {
+            $pwdHashed = $row['usersPwd'];
+            return password_verify($pwd, $pwdHashed);
+        } 
     }
     return false;
 }
 
 function changePassword($conn, $username, $pwd) {
 
-    $sql = "UPDATE users SET usersPwd = :hashedPwd WHERE usersName = :username";
+    $sql = "UPDATE users SET usersPwd = '$pwd' WHERE usersName = '$username'";
+    /*
     $stmt = $conn->prepare($sql);
 
     if(!$stmt){
@@ -273,6 +280,8 @@ function changePassword($conn, $username, $pwd) {
     $stmt->bindParam(':username', $username);
 
     $stmt->execute();
+    */
+    sqlsrv_query($conn,$sql);
     header("location: ../changepass.php?error=none");
     exit();
 }
@@ -293,5 +302,8 @@ function db_check(){
     $conn = sqlsrv_connect($serverName, $connectionInfo);
     return $conn;
 }
+
+
+
 
 
