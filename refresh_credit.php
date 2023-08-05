@@ -11,20 +11,16 @@
             ORDER BY fill_list.filled_order_id DESC";
     $result2 = sqlsrv_query($conn, $sql);
     if ($result2) {
-        if (mysqli_num_rows($result2)>0) {
-            while ($row = mysqli_fetch_assoc($result2)) {
-                $filled_volume[] = $row['volume'];
-                $filled_request[] = $row['request'];
-            }
+        while ($row = sqlsrv_fetch_array($result2, SQLSRV_FETCH_ASSOC)) {
+            $filled_volume[] = $row['volume'];
+            $filled_request[] = $row['request'];
         }
     }
     $sql = "SELECT usersEmission from users where usersName = '$user'";
     $result5 = sqlsrv_query($conn, $sql);
     if ($result5) {
-        if (mysqli_num_rows($result5)>0) {
-            while ($row = mysqli_fetch_assoc($result5)) {
-                $emission = $row['usersEmission'];
-            }
+        while ($row = sqlsrv_fetch_array($result5, SQLSRV_FETCH_ASSOC)) {
+            $emission = $row['usersEmission'];
         }
     }
     if($filled_request[0] == "buy"){

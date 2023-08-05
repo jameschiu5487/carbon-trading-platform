@@ -13,23 +13,28 @@
             ON order_list.username = '$user' AND (fill_list.id1 = order_list.id OR fill_list.id2 = order_list.id)
             ORDER BY fill_list.filled_order_id DESC";
     $result2 = sqlsrv_query($conn, $sql);
+    $flag=0;
     if ($result2) {
-        if (mysqli_num_rows($result2)>0) {
-            while ($row = mysqli_fetch_assoc($result2)) {
-                $filled_volume[] = $row['volume'];
-                $filled_request[] = $row['request'];
-            }
+        while ($row = sqlsrv_fetch_array($result2, SQLSRV_FETCH_ASSOC)) {
+            $filled_volume[] = $row['volume'];
+            $filled_request[] = $row['request'];
+            $flag=1;
+        }
+        if($flag==1){
             $count = count($filled_request);
         }
+        else{
+            $count = 0;
+        }
     }
+    
     $sql = "SELECT usersEmission from users where usersName = '$user'";
     $result5 = sqlsrv_query($conn, $sql);
     if ($result5) {
-        if (mysqli_num_rows($result5)>0) {
-            while ($row = mysqli_fetch_assoc($result5)) {
-                $emission = $row['usersEmission'];
-            }
-        }
+        while ($row = sqlsrv_fetch_array($result5, SQLSRV_FETCH_ASSOC)) {
+            $emission = $row['usersEmission'];
+            $flag_em = 1;
+        } 
     }
     for($i=0; $i<($count-$_SESSION["count"]); $i++){
         if($filled_request[$i] == "buy"){
@@ -41,10 +46,10 @@
         $sql = "UPDATE users set usersEmission = '$emission' where usersName = '$user'";
         sqlsrv_query($conn, $sql);
     }
-    $_SESSION["count"] = count($filled_request);
+    $_SESSION["count"] = $count;
 ?>
 <?php
-    if($row = mysqli_fetch_assoc($result3))
+    if($row = sqlsrv_fetch_array($result3, SQLSRV_FETCH_ASSOC))
     {
 ?>
     <p><?php echo "Credit : ".$row['usersEmission']; ?></p>

@@ -20,11 +20,12 @@
                 <th>Price</th>
             </tr>';
 
-    while ($row = mysqli_fetch_assoc($result2)) {
-
+    while ($row = sqlsrv_fetch_array($result2, SQLSRV_FETCH_ASSOC)) {
+        $dateTimeObject = $row['time']; // Assuming you have a DateTime object
+        $timestampString = (string) $dateTimeObject->getTimestamp();
         $html .= '<tr>';
         $html .= '<td>' . $row['id'] . '</td>';
-        $html .= '<td>' . $row['time'] . '</td>';
+        $html .= '<td>' . $timestampString . '</td>';
         $html .= '<td>' . $row['request'] . '</td>';
         $html .= '<td>' . $row['volume'] . '</td>';
         $html .= '<td>' . $row['price'] . '</td>';

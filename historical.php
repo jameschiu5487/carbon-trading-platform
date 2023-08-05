@@ -17,10 +17,12 @@
                 <th>Current Status</th>
             </tr>';
 
-    while ($row = mysqli_fetch_assoc($result)) {
+    while ($row = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC)) {
+        $dateTimeObject = $row['time1']; // Assuming you have a DateTime object
+        $timestampString = (string) $dateTimeObject->getTimestamp();
         $html .= '<tr>';
         $html .= '<td>' . $row['id'] . '</td>';
-        $html .= '<td>' . $row['time1'] . '</td>';
+        $html .= '<td>' . $timestampString . '</td>';
         $html .= '<td>' . $row['request'] . '</td>';
         $html .= '<td>' . $row['volume'] . '</td>';
         // $html .= '<td>' . $row['price'] . '</td>';
