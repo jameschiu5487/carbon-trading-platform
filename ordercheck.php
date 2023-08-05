@@ -635,6 +635,6 @@ function Edit_Bid_Volume($price, $volume_change, $conn){
 }
 sqlsrv_close($conn);
 
-header("Location: trade.php");
+header("Location: ./trade.php");
 
 
