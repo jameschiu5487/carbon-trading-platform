@@ -1,4 +1,5 @@
 <?php
+ob_start(); // Enable output buffering
 require_once 'includes/dbh.inc.php';
 require_once 'includes/functions.inc.php';
 
@@ -625,5 +626,6 @@ function Edit_Bid_Volume($price, $volume_change, $conn){
 sqlsrv_close($conn);
 
 header("Location: https://carbon-trading.azurewebsites.net/trade.php");
+ob_end_flush();
 
 

@@ -1,4 +1,5 @@
 <?php
+ob_start(); // Enable output buffering
     // session_start();
     // require_once 'dbh.inc.php';
     // require_once 'functions.inc.php';
@@ -83,12 +84,12 @@
 
         if (emptyInputLogin($username, $pwd) !== false) {
             header("location: ./login.php?error=emptyinput");
-            exit();
+            ob_end_flush();
         }
 
         loginUser($conn, $username, $pwd);
         // setcookie("user", $username, time() + 86400);        
     } else {
         header("location: https://carbon-trading.azurewebsites.net/login.php");
-        exit();
+        ob_end_flush();
     }
