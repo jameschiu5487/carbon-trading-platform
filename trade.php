@@ -1,4 +1,5 @@
 <?php
+ob_start(); // Enable output buffering
     session_start();
     require_once 'includes/dbh.inc.php';
     if(isset($_SESSION["useruid"])){

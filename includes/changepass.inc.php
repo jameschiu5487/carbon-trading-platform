@@ -1,5 +1,5 @@
 <?php
-
+ob_start(); // Enable output buffering
 if(isset($_POST["submit"])){
 
     $username = $_POST["name"];
@@ -12,19 +12,19 @@ if(isset($_POST["submit"])){
 
     if(emptyInputChangepass($username, $pwd, $pwdnew, $pwdrepeat) !== false){
         header("location: ../changepass.php?error=emptyinput");
-        exit();
+        ob_end_flush();
     }
     if(uidExists($conn, $username) === false){
         header("location: ../changepass.php?error=notauser");
-        exit();
+        ob_end_flush();
     }
     if(corrPassword($conn, $username, $pwd) === false){
         header("location: ../changepass.php?error=wrongoldpassword");
-        exit();
+        ob_end_flush();
     }
     if(pwdMatch($pwdnew, $pwdrepeat) !== false){
         header("location: ../changepass.php?error=passwordnotmatch");
-        exit();
+        ob_end_flush();
     }
 
     changePassword($conn, $username, $pwdnew);
