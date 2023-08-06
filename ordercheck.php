@@ -333,7 +333,7 @@ function Limit_order_sell($request, $price, $volume, $user, $conn) {
     //判斷limit是否小於市價
     if ($price<=$bid_prices[0]){
       $count = $volume;
-      for ($i=0; $bid_prices[$i]<=$price ;$i++){
+      for ($i=0; $bid_prices[$i]>=$price ;$i++){
         echo $bid_prices[$i];
         $bid_price = $bid_prices[$i];
         echo "<br>";
@@ -561,6 +561,7 @@ function IOC_order_sell($request, $volume, $user, $conn){
 function Get_Bid_Data($conn){
   $sql = "SELECT * FROM bid ORDER BY price DESC ";
   $result = sqlsrv_query($conn, $sql);
+  $flag = 0;
   if ($result) {
     // mysqli_num_rows方法可以回傳我們結果總共有幾筆資料
     while ($row = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC)) {
@@ -568,12 +569,6 @@ function Get_Bid_Data($conn){
         $bid_volumes[] = $row['volume'];
         $bid_prices[] = $row['price'];
         $flag = 1;
-    }
-    if ($flag==1){
-      $flag=1;
-    }
-    else {
-      $flag = 0;
     }
     // 釋放資料庫查到的記憶體
     sqlsrv_free_stmt($result);
@@ -583,20 +578,14 @@ function Get_Bid_Data($conn){
 function Get_Ask_Data($conn){
   $sql = "SELECT * FROM ask ORDER BY price ASC";
   $result = sqlsrv_query($conn, $sql);
-  // 如果有資料
+  $flag = 0;
   if ($result) {
     // mysqli_num_rows方法可以回傳我們結果總共有幾筆資料
-        while ($row = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC)) {
-            // 每跑一次迴圈就抓一筆值，最後放進data陣列中
-            $ask_volumes[] = $row['volume'];
-            $ask_prices[] = $row['price'];
-            $flag = 1;
-        }
-    if ($flag==1){
-      $flag=1;
-    }
-    else {
-      $flag = 0;
+    while ($row = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC)) {
+        // 每跑一次迴圈就抓一筆值，最後放進data陣列中
+        $ask_volumes[] = $row['volume'];
+        $ask_prices[] = $row['price'];
+        $flag = 1;
     }
     // 釋放資料庫查到的記憶體
     sqlsrv_free_stmt($result);
@@ -635,6 +624,6 @@ function Edit_Bid_Volume($price, $volume_change, $conn){
 }
 sqlsrv_close($conn);
 
-header("Location: ./trade.php");
+header("Location: https://carbon-trading.azurewebsites.net/trade.php");
 
 
