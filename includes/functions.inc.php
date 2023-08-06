@@ -1,5 +1,5 @@
 <?php
-
+ob_start(); // Enable output buffering
 // function emptyInputSignup($username, $emission, $industry, $pwd, $pwdrepeat){
 //     $result;
 //     if(empty($username) || empty($emission) || empty($industry) || empty($pwd) || empty($pwdrepeat)){
@@ -202,7 +202,7 @@ function createUser($conn, $username, $emission, $industry, $pwd){
     */
     sqlsrv_query($conn, $sql);
     header("location: https://carbon-trading.azurewebsites.net/signup.php?error=none");
-    exit();
+    ob_end_flush();
 }
 
 function emptyInputLogin($username, $pwd){
@@ -215,7 +215,7 @@ function loginUser($conn, $username, $pwd){
 
     if(!$uidExists){
         header("location: https://carbon-trading.azurewebsites.net/login.php?error=wronglogin");
-        exit();
+        ob_end_flush();
     }
     print_r($uidExists);
     $pwdHashed = $uidExists[0]['usersPwd'];
@@ -224,13 +224,14 @@ function loginUser($conn, $username, $pwd){
 
     if(!$checkPwd){
         header("location: https://carbon-trading.azurewebsites.net/login.php?error=wronglogin");
+        ob_end_flush();
     }
     else{
         session_start();
         $_SESSION["userid"] = $uidExists[0]["usersID"];
         $_SESSION["useruid"] = $uidExists[0]["usersName"];
         header("location: https://carbon-trading.azurewebsites.net/trade.php");
-        exit();
+        ob_end_flush();
     }
 }
 
@@ -283,7 +284,7 @@ function changePassword($conn, $username, $pwd) {
     */
     sqlsrv_query($conn,$sql);
     header("location: https://carbon-trading.azurewebsites.net/changepass.php?error=none");
-    exit();
+    ob_end_flush();
 }
 
 function db_check(){
