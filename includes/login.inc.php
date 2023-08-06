@@ -89,6 +89,6 @@
         loginUser($conn, $username, $pwd);
         // setcookie("user", $username, time() + 86400);        
     } else {
-        header("location: ./login.php");
+        header("location: https://carbon-trading.azurewebsites.net/login.php");
         exit();
     }

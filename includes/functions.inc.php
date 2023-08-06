@@ -201,7 +201,7 @@ function createUser($conn, $username, $emission, $industry, $pwd){
     $stmt->execute();
     */
     sqlsrv_query($conn, $sql);
-    header("location: ./signup.php?error=none");
+    header("location: https://carbon-trading.azurewebsites.net/signup.php?error=none");
     exit();
 }
 
@@ -214,7 +214,7 @@ function loginUser($conn, $username, $pwd){
     $uidExists = uidExists($conn, $username);
 
     if(!$uidExists){
-        header("location: ./login.php?error=wronglogin");
+        header("location: https://carbon-trading.azurewebsites.net/login.php?error=wronglogin");
         exit();
     }
     print_r($uidExists);
@@ -223,13 +223,13 @@ function loginUser($conn, $username, $pwd){
     $checkPwd = password_verify($pwd, $pwdHashed);
 
     if(!$checkPwd){
-        header("location: ./login.php?error=wronglogin");
+        header("location: https://carbon-trading.azurewebsites.net/login.php?error=wronglogin");
     }
     else{
         session_start();
         $_SESSION["userid"] = $uidExists[0]["usersID"];
         $_SESSION["useruid"] = $uidExists[0]["usersName"];
-        header("location: ./trade.php");
+        header("location: https://carbon-trading.azurewebsites.net/trade.php");
         exit();
     }
 }
@@ -282,7 +282,7 @@ function changePassword($conn, $username, $pwd) {
     $stmt->execute();
     */
     sqlsrv_query($conn,$sql);
-    header("location: ../changepass.php?error=none");
+    header("location: https://carbon-trading.azurewebsites.net/changepass.php?error=none");
     exit();
 }
 
