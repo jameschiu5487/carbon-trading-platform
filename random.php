@@ -1,4 +1,5 @@
 <?php
+ob_start(); // Enable output buffering
 require_once 'includes/dbh.inc.php';
 // require_once 'includes/functions.inc.php';
 require_once 'ordercheck.php';
@@ -64,3 +65,4 @@ function random_order(){
 }
 $conn->close();
 header("Location: random.php");
+ob_end_flush();
