@@ -56,7 +56,7 @@
                                     echo "<p>Fill in all fields!</p>";
                                 }
                                 else if($_GET["error"] == "wronglogin"){
-                                    echo "<p>Please try angain!</p>";
+                                    echo "<p>Please try again!</p>";
                                 }
                             }
                         ?>
