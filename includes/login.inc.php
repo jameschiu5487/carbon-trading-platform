@@ -40,7 +40,7 @@
     //     exit();
     // }
 
-
+    ob_start();
     session_start();
     require_once 'dbh.inc.php';
     require_once 'functions.inc.php';
@@ -82,13 +82,13 @@
         }
 
         if (emptyInputLogin($username, $pwd) !== false) {
-            header("location: ../login.php?error=emptyinput");
-            exit();
+            header("location: ./login.php?error=emptyinput");
+            ob_end_flush();
         }
 
         loginUser($conn, $username, $pwd);
         // setcookie("user", $username, time() + 86400);        
     } else {
-        header("location: ../login.php");
-        exit();
+        header("location: https://carbon-trading.azurewebsites.net/login.php");
+        ob_end_flush();
     }
