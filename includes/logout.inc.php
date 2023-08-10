@@ -4,5 +4,5 @@ session_start();
 session_unset();
 session_destroy();
 
-header("Location: https://carbon-trading.azurewebsites.net/trade.php");
+header("location: https://carbon-trading.azurewebsites.net/index.php");
 ob_end_flush();
