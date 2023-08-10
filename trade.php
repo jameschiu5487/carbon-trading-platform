@@ -146,11 +146,12 @@ ob_start(); // Enable output buffering
                                     // while($row = mysqli_fetch_assoc($result))
                                     while ($row = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC)) 
                                     {
-                                        $dateTimeObject = $row['time1']; // Assuming you have a DateTime object
-                                        $timestampString = (string) $dateTimeObject->getTimestamp();
+                                        $dateTimeObject = $row['time']; // Create a DateTime object
+                                        // Convert the DateTime object to a string using the format method  
+                                        $formattedDate = $dateTimeObject->format('Y-m-d H:i:s');
                                 ?>
                                     <td><?php echo $row['id']; ?></td>
-                                    <td><?php echo $timestampString; ?></td>
+                                    <td><?php echo $formattedDate; ?></td>
                                     <td><?php echo $row['request']; ?></td>
                                     <td><?php echo $row['volume']; ?></td>
                                     <td><?php if($row['price'] == NULL){echo "Market Price";} else{echo $row['price'];} ?></td>
@@ -180,11 +181,12 @@ ob_start(); // Enable output buffering
                             // while($row = mysqli_fetch_assoc($result2))
                             while ($row = sqlsrv_fetch_array($result2, SQLSRV_FETCH_ASSOC))
                             {
-                                $dateTimeObject = $row['time']; // Assuming you have a DateTime object
-                                $timestampString = (string) $dateTimeObject->getTimestamp();
+                                $dateTimeObject = $row['time']; // Create a DateTime object
+                                // Convert the DateTime object to a string using the format method  
+                                $formattedDate = $dateTimeObject->format('Y-m-d H:i:s');
                         ?>
                             <td><?php echo $row['id']; ?></td>
-                            <td><?php echo $timestampString; ?></td>
+                            <td><?php echo $formattedDate; ?></td>
                             <td><?php echo $row['request']; ?></td>
                             <td><?php echo $row['volume']; ?></td>
                             <td><?php echo $row['price']; ?></td>
