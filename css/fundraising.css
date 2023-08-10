@@ -1,0 +1,25 @@
+*{
+    margin: 0; 
+    padding: 0;
+    border: 0;
+    box-sizing: border-box;
+    list-style: none;
+    font-family: 'Nunito', sans-serif;
+}
+  
+body{
+    background-image: url("../img/homepage_background.jpg");
+    background-size: cover;
+    background-position: center;
+    opacity: 0.93;
+}
+
+.main-content{
+    min-height: 60vh;
+    width: 60%;
+    margin: 13.125rem auto;
+    /* margin: 210px auto; */
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+}
+

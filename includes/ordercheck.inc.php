@@ -597,4 +597,4 @@ function Edit_Bid_Volume($price, $volume_change, $conn){
   }
 }
 $conn->close();
-//header("Location: https://carbon-trading.azurewebsites.net/trade.php");
+// header("Location: ../trade.php");

@@ -9,6 +9,14 @@
             $bid_volumes[] = $row['volume'];
             $bid_prices[] = $row['price'];
         }
+        for($i=0; $i<=4; $i++)
+        {
+            if(empty($bid_volumes[$i]))
+            {
+                $bid_volumes[$i] = 0;
+                $bid_prices[$i] = 0;
+            }
+        }
     }
     for($i=0; $i<=4; $i++)
     {
@@ -16,8 +24,20 @@
     }
     for($i=0; $i<=4; $i++)
     {
-        $bid_vol_per = ($bid_volumes[$i] / $bid_volumes_sum) * 200;
+        $bid_vol_per = ($bid_volumes[$i] / $bid_volumes_sum) * 100;
         $bid_vol_per = number_format($bid_vol_per, 2);
+        if($bid_volumes[$i] == 0)
+        {
+    ?>
+        <ul><?php echo "$".' '; ?></ul>
+        <div class="progress-bar">
+            <div class="bid_bar" style="width: <?php echo $bid_vol_per; ?>%;"></div>
+        </div>
+        <li><?php echo "Volume : ".' '; ?></li>
+    <?php
+        }
+        else
+        {
 ?>
     <ul><?php echo "$".$bid_prices[$i]; ?></ul>
     <div class="progress-bar">
@@ -25,5 +45,6 @@
     </div>
     <li><?php echo "Volume : ".$bid_volumes[$i]; ?></li>
 <?php
+        }
     }
 ?>
