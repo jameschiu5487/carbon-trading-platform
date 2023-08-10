@@ -9,7 +9,14 @@
             $ask_volumes[] = $row['volume'];
             $ask_prices[] = $row['price'];
         }
-        
+        for($i=0; $i<=4; $i++)
+        {
+            if(empty($ask_volumes[$i]))
+            {
+                $ask_volumes[$i] = 0;
+                $ask_prices[$i] = 0;
+            }
+        }
     }
 
     for($i=4; $i>=0; $i--)
@@ -18,8 +25,20 @@
     }
     for($i=4; $i>=0; $i--)
     {
-        $ask_vol_per = ($ask_volumes[$i] / $ask_volumes_sum) * 200;
+        $ask_vol_per = ($ask_volumes[$i] / $ask_volumes_sum) * 100;
         $ask_vol_per = number_format($ask_vol_per, 2);
+        if($ask_volumes[$i] == 0)
+        {
+    ?>
+        <ul><?php echo "$".' '; ?></ul>
+        <div class="progress-bar">
+            <div class="ask_bar" style="width: <?php echo $ask_vol_per; ?>%;"></div>
+        </div>
+        <li><?php echo "Volume : ".' '; ?></li>
+    <?php
+        }
+        else
+        {
 ?>
     <ul><?php echo "$".$ask_prices[$i]; ?></ul>
     <div class="progress-bar">
@@ -27,5 +46,6 @@
     </div>
     <li><?php echo "Volume : ".$ask_volumes[$i]; ?></li>
 <?php
+        }
     }
 ?>

@@ -21,7 +21,8 @@
             </tr>';
 
     while ($row = sqlsrv_fetch_array($result2, SQLSRV_FETCH_ASSOC)) {
-        $dateTimeObject = $row['time']; // Create a DateTime object
+        $dateTimeObject = $row['time']; // Assuming you have a DateTime object
+        // $timestampString = (string) $dateTimeObject->getTimestamp();
         // Convert the DateTime object to a string using the format method  
         $formattedDate = $dateTimeObject->format('Y-m-d H:i:s');
         $html .= '<tr>';

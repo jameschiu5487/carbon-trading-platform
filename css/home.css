@@ -40,7 +40,7 @@ body{
 .container nav ul li{
     display: inline-block;
     /* margin-left: 20px; */
-    margin-left: 1.25rem;
+    margin-left: 3.25rem;
     position: relative;
 }
   
@@ -62,5 +62,5 @@ body{
     color: #808080;
     text-decoration: none;
     /* padding-left: 450px; */
-    padding-left: 28.125rem;
+    padding-left: 30.125rem;
 }

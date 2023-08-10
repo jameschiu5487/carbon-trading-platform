@@ -1,5 +1,5 @@
 <?php
-ob_start(); // Enable output buffering
+
 if(isset($_POST["submit"])){
 
     $username = $_POST["name"];

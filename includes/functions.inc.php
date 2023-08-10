@@ -1,5 +1,5 @@
 <?php
-ob_start(); // Enable output buffering
+
 // function emptyInputSignup($username, $emission, $industry, $pwd, $pwdrepeat){
 //     $result;
 //     if(empty($username) || empty($emission) || empty($industry) || empty($pwd) || empty($pwdrepeat)){
@@ -201,8 +201,8 @@ function createUser($conn, $username, $emission, $industry, $pwd){
     $stmt->execute();
     */
     sqlsrv_query($conn, $sql);
-    header("location: https://carbon-trading.azurewebsites.net/signup.php?error=none");
-    ob_end_flush();
+    header("location: ../signup.php?error=none");
+    exit();
 }
 
 function emptyInputLogin($username, $pwd){
@@ -214,8 +214,8 @@ function loginUser($conn, $username, $pwd){
     $uidExists = uidExists($conn, $username);
 
     if(!$uidExists){
-        header("location: https://carbon-trading.azurewebsites.net/login.php?error=wronglogin");
-        ob_end_flush();
+        header("location: ../login.php?error=wronglogin");
+        exit();
     }
     print_r($uidExists);
     $pwdHashed = $uidExists[0]['usersPwd'];
@@ -223,15 +223,14 @@ function loginUser($conn, $username, $pwd){
     $checkPwd = password_verify($pwd, $pwdHashed);
 
     if(!$checkPwd){
-        header("location: https://carbon-trading.azurewebsites.net/login.php?error=wronglogin");
-        ob_end_flush();
+        header("location: ../login.php?error=wronglogin");
     }
     else{
         session_start();
         $_SESSION["userid"] = $uidExists[0]["usersID"];
         $_SESSION["useruid"] = $uidExists[0]["usersName"];
-        header("location: https://carbon-trading.azurewebsites.net/trade.php");
-        ob_end_flush();
+        header("location: ../trade.php");
+        exit();
     }
 }
 
@@ -283,8 +282,8 @@ function changePassword($conn, $username, $pwd) {
     $stmt->execute();
     */
     sqlsrv_query($conn,$sql);
-    header("location: https://carbon-trading.azurewebsites.net/changepass.php?error=none");
-    ob_end_flush();
+    header("location: ../changepass.php?error=none");
+    exit();
 }
 
 function db_check(){
@@ -303,8 +302,5 @@ function db_check(){
     $conn = sqlsrv_connect($serverName, $connectionInfo);
     return $conn;
 }
-
-
-
 
 
