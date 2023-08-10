@@ -181,7 +181,7 @@ ob_start(); // Enable output buffering
                             // while($row = mysqli_fetch_assoc($result2))
                             while ($row = sqlsrv_fetch_array($result2, SQLSRV_FETCH_ASSOC))
                             {
-                                $dateTimeObject = $row['time1']; // Create a DateTime object
+                                $dateTimeObject = $row['time']; // Create a DateTime object
                                 // Convert the DateTime object to a string using the format method  
                                 $formattedDate = $dateTimeObject->format('Y-m-d H:i:s');
                         ?>
