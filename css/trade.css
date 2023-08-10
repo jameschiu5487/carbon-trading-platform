@@ -16,9 +16,11 @@ body{
 
 .main-content{
     min-height: 60vh; 
-    height: 810px;
-    width: 80%;
-    margin: 130px auto;
+    /* height: 810px; */
+    height: 50.625rem;
+    width: 75%;
+    /* margin: 130px auto; */
+    margin: 8.125rem auto;
     display: grid;
     grid-template-columns: repeat(14, 1fr);
     grid-template-rows: repeat(14, 1fr);
@@ -113,6 +115,7 @@ body{
     padding: 0.625rem;
     margin-bottom: 0.9375rem;
     margin-top: 1.875rem;
+    /* margin-left: 1rem; */
     margin-right: 1.25rem;
     background-color: green;
     color: #fff;
@@ -128,6 +131,7 @@ body{
     width: 9.6875rem;
     padding: 0.625rem;
     margin-top: 1.875rem;
+    margin-left: 1rem;
     background-color: red;
     color: #fff;
     border: none;
@@ -136,19 +140,30 @@ body{
     cursor: pointer;
     transition: background-color 0.3s;
 }
-/* .order-form button[type="submit"] {
+
+.recurring-but button[type="button"]{
+    /* float: left; */
     display: block;
-    width: 100%;
-    padding: 10px;
-    background-color: green;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    font-size: 18px;
+    width: 9.6875rem;
+    padding: 0.625rem;
+    margin-bottom: 0.9375rem;
+    margin-top: 0.65rem;
+    margin-left: 2.6rem;
+    /* margin-right: 1.25rem; */
+    /* background-color: #d4ac0d; */
+    color: #808080;
+    /* border: none; */
+    border-radius: 0.3125rem;
+    font-size: 1.125rem;
     cursor: pointer;
     transition: background-color 0.3s;
 }
-   */
+
+.recurring-but button[type="submit"]:hover{
+    background-color: #808080;
+    color: #f1f1f1;
+}
+
 .order-form button[type="submit"]:hover {
     background-color: #808080;
 }
@@ -248,73 +263,93 @@ tr:nth-of-type(even) td{
 
 .buy-title{
     padding-left: 1.875rem;
-    padding-right: 1.4rem;
+    padding-right: 1.5rem;
     color: red;
 }
 
 .market-order p{
-    font-size: 25px;
+    /* font-size: 25px; */
+    font-size: 1.5625rem;
     font-weight: 500;
     text-align: center;
-    margin-bottom: 15px;
+    /* margin-bottom: 15px;
     margin-left: 10px;
-    margin-right: 10px;
+    margin-right: 10px; */
+    margin-bottom: 0.9375rem;
+    margin-left: 0.625rem;
+    margin-right: 0.625rem;
     color: black;
     background-color: #ccc;
-    border-radius: 10px;
+    /* border-radius: 10px; */
+    border-radius: 0.3125rem;
 }
 
 
 ul{
-    font-size: 20px;
-    padding-bottom: 11px; 
+    /* font-size: 20px;
+    padding-bottom: 11px;  */
+    font-size: 1.25rem;
+    /* padding-bottom: 0.6875rem; */
+    padding-bottom: 0.95rem;
     float: left;
     /* padding-right: 20px; */
 }
 
 li{
-    font-size: 20px;
+    /* font-size: 20px; */
+    font-size: 1.25rem;
     /* float: right; */
-    padding-bottom: 11px;
+    /* padding-bottom: 11px; */
+    padding-bottom: 0.95rem;
     /* padding-right: 180px; */
 }
 
 
 
 .container{
-    padding-top: 25px;
+    /* padding-top: 25px; */
+    padding-top: 1.5625rem;
     /* padding-right: 15px; */
 }
   
 .container nav ul li{
-    margin-left: 50px;
+    /* margin-left: 50px; */
+    margin-left: 3.125rem;
 }
   
 .container nav ul a{
-    font-size: 20px;
-    margin-left: 230px;
-    color: #f3f3f3;
+    /* font-size: 20px;
+    margin-left: 230px; */
+    font-size: 1.25rem;
+    margin-left: 14.375rem;
+    color: #f1f1f1;
     text-decoration: none;
     text-transform: uppercase;
-    border-radius: 10px;
-    padding: 5px;
-    border: 1px solid #A6ACAF;
+    /* border-radius: 10px;
+    padding: 5px; */
+    border-radius: 0.625rem;
+    padding: 0.3125rem;
+    border: 0.0625rem solid #A6ACAF;
 } 
   
 .container nav ul a:hover{
-    background-color: #bcc6cc;
-    color: white;
+    background-color: #808080;
+    color: #f1f1f1;
 }
 
 .possession{
-    color: #666362;
-    font-size: 17px;
+    color: #f1f1f1;
+    /* font-size: 17px; */
+    font-size: 1.0625rem;
     text-transform: uppercase;
-    margin-left: 10px;
+    /* margin-left: 10px;
     border-radius: 10px;
-    padding: 5px;
-    border: 1px solid #A6ACAF;
-    background-color: #ccc;
+    padding: 5px; */
+    margin-left: 2rem;
+    border-radius: 0.625rem;
+    padding: 0.3125rem;
+    border: 0.0625rem solid #A6ACAF;
+    /* background-color: #ccc; */
 
 }
 
@@ -338,4 +373,79 @@ li{
 .ask_bar {
     height: 1rem;
     background-color: green;
+}
+
+
+
+
+
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+    font-size: 2rem;
+    background-color: white;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 50%;
+}
+
+.modal-content p{
+    font-size: 2rem;
+    padding: 1rem;
+    margin-bottom: 2rem;
+    color: #808080;
+    font-weight: 100;
+    letter-spacing: 0.15625rem;
+    text-transform: uppercase;
+    border-bottom: 0.125rem solid #A6ACAF;
+}
+
+.modal-content input,
+.modal-content select{
+    display: block;
+    width: 50%;
+    margin-bottom: 1.25rem;
+    margin-left: 1rem;
+    padding: 0.625rem;
+    border: 0.0625rem solid #ccc;
+    border-radius: 0.3125rem;
+    font-size: 1.125rem;
+    color: #666362;
+}
+
+.modal-content button{
+    display: block;
+    width: 12rem;
+    padding: 0.625rem;
+    margin-top: 3rem;
+    margin-bottom: 1rem;
+    margin-left: 1rem;
+    color: #808080;
+    border-radius: 0.3125rem;
+    font-size: 1.125rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.modal-content button:hover{
+    background-color: #808080;
+    color: #f1f1f1;
+}
+
+.close { /*關閉的按鈕*/
+    float: right;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
 }

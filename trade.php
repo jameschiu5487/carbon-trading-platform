@@ -1,5 +1,4 @@
 <?php
-ob_start(); // Enable output buffering
     session_start();
     require_once 'includes/dbh.inc.php';
     if(isset($_SESSION["useruid"])){
@@ -146,7 +145,8 @@ ob_start(); // Enable output buffering
                                     // while($row = mysqli_fetch_assoc($result))
                                     while ($row = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC)) 
                                     {
-                                        $dateTimeObject = $row['time1']; // Create a DateTime object
+                                        $dateTimeObject = $row['time1']; // Assuming you have a DateTime object
+                                        // $timestampString = (string) $dateTimeObject->getTimestamp();
                                         // Convert the DateTime object to a string using the format method  
                                         $formattedDate = $dateTimeObject->format('Y-m-d H:i:s');
                                 ?>
@@ -181,7 +181,8 @@ ob_start(); // Enable output buffering
                             // while($row = mysqli_fetch_assoc($result2))
                             while ($row = sqlsrv_fetch_array($result2, SQLSRV_FETCH_ASSOC))
                             {
-                                $dateTimeObject = $row['time']; // Create a DateTime object
+                                $dateTimeObject = $row['time']; // Assuming you have a DateTime object
+                                // $timestampString = (string) $dateTimeObject->getTimestamp();
                                 // Convert the DateTime object to a string using the format method  
                                 $formattedDate = $dateTimeObject->format('Y-m-d H:i:s');
                         ?>
@@ -217,6 +218,46 @@ ob_start(); // Enable output buffering
                     <h3>Price</h3>
                     <h3>Volume</h3>
                 </div>
+
+
+                <div class="modal" id="myModal">
+                    <div class="modal-content">
+                        <span class="close" id="closeModalBtn">&times;</span>  
+                        <p>Recurring Buy</p> 
+                        <form action="includes/recurring.inc.php" method="post">
+                            <input type="number" name="Volume" min="0" oninput="validity.valid||(value='');" placeholder="Recurring buy volume...">
+                            <select name="Frequency">
+                                <option value="" disabled selected>Frequency...</option>
+                                <option value="daily">Daily</option>
+                                <option value="weekly">Weekly</option>
+                                <option value="biweekly">Biweekly</option>
+                                <option value="monthly">Monthly</option>
+                            </select>
+                            <select name="Day">
+                                <option value="" disabled selected>Day...</option>
+                                <option value="monday">Monday</option>
+                                <option value="tuesday">Teusday</option>
+                                <option value="wednesday">Wednesday</option>
+                                <option value="thrusday">Thrusday</option>
+                                <option value="friday">Friday</option>
+                                <option value="saturday">Saturday</option>
+                                <option value="sunday">Sunday</option>
+                            </select>
+                            <input type="time" name="Time" placeholder="Time...">
+
+                            <button type="submit" name="submit">Place Order</button>
+                        </form>
+                    </div>
+                </div>
+                <!-- <form action="includes/recurring.inc.php" method="post"> -->
+                    <div class="recurring-but">
+                        <button type="button" id="recurringButton">Recurring</button>
+                    </div>
+                <!-- </form> -->
+                <script src="refresh.js"></script>
+
+
+
             </section>
         </section>
         <section class="right-top-right">
@@ -242,7 +283,7 @@ ob_start(); // Enable output buffering
                         <option value="limit order">Limit order</option>
                         <option value="market order">Market order</option>
                     </select>
-                    <input type="number" name="price" min="1" oninput="validity.valid||(value='');" placeholder="請輸入欲交易的價格...">
+                    <input type="number" name="price" min="1" step="0.01" oninput="validity.valid||(value='');" placeholder="請輸入欲交易的價格...">
                     <input type="number" name="volume" min="1" oninput="validity.valid||(value='');" placeholder="請輸入交易量...">
                     <div class="sell-bot">
                         <button type="submit" name="sell">Sell</button>
@@ -267,6 +308,14 @@ ob_start(); // Enable output buffering
                                         $ask_volumes[] = $row['volume'];
                                         $ask_prices[] = $row['price'];
                                     }
+                                    for($i=0; $i<=4; $i++)
+                                    {
+                                        if(empty($ask_volumes[$i]))
+                                        {
+                                            $ask_volumes[$i] = 0;
+                                            $ask_prices[$i] = 0;
+                                        }
+                                    }
                                 }
                             }
                             for($i=4; $i>=0; $i--)
@@ -275,15 +324,27 @@ ob_start(); // Enable output buffering
                             }
                             for($i=4; $i>=0; $i--)
                             {
-                                $ask_vol_per = ($ask_volumes[$i] / $ask_volumes_sum) * 200;
+                                $ask_vol_per = ($ask_volumes[$i] / $ask_volumes_sum) * 100;
                                 $ask_vol_per = number_format($ask_vol_per, 2);
-                        ?>
-                            <ul><?php echo "$".$ask_prices[$i]; ?></ul>
-                            <div class="progress-bar">
-                                <div class="ask_bar" style="width: <?php echo $ask_vol_per; ?>%;"></div>
-                            </div>
-                            <li><?php echo "Volume : ".$ask_volumes[$i]; ?></li>
+                                if($ask_volumes[$i] == 0)
+                                {
+                            ?>
+                                    <ul><?php echo "$".' '; ?></ul>
+                                    <div class="progress-bar">
+                                        <div class="ask_bar" style="width: <?php echo $ask_vol_per; ?>%;"></div>
+                                    </div>
+                                    <li><?php echo "Volume : ".' '; ?></li>
+                            <?php
+                                }
+                                else{
+                            ?>
+                                <ul><?php echo "$".$ask_prices[$i]; ?></ul>
+                                <div class="progress-bar">
+                                    <div class="ask_bar" style="width: <?php echo $ask_vol_per; ?>%;"></div>
+                                </div>
+                                <li><?php echo "Volume : ".$ask_volumes[$i]; ?></li>
                         <?php
+                                }
                             }
                         ?>
                     </div>
@@ -310,6 +371,14 @@ ob_start(); // Enable output buffering
                                         $bid_volumes[] = $row['volume'];
                                         $bid_prices[] = $row['price'];
                                     }
+                                    for($i=0; $i<=4; $i++)
+                                    {
+                                        if(empty($bid_volumes[$i]))
+                                        {
+                                            $bid_volumes[$i] = 0;
+                                            $bid_prices[$i] = 0;
+                                        }
+                                    }
                                 }
                             }
                             for($i=0; $i<=4; $i++)
@@ -318,8 +387,20 @@ ob_start(); // Enable output buffering
                             }
                             for($i=0; $i<=4; $i++)
                             {
-                                $bid_vol_per = ($bid_volumes[$i] / $bid_volumes_sum) * 200;
+                                $bid_vol_per = ($bid_volumes[$i] / $bid_volumes_sum) * 100;
                                 $bid_vol_per = number_format($bid_vol_per, 2);
+                                if($bid_volumes[$i] == 0)
+                                {
+                            ?>
+                                <ul><?php echo "$".' '; ?></ul>
+                                <div class="progress-bar">
+                                    <div class="bid_bar" style="width: <?php echo $bid_vol_per; ?>%;"></div>
+                                </div>
+                                <li><?php echo "Volume : ".' '; ?></li>
+                            <?php
+                                }
+                                else
+                                {
                         ?>
                             <ul><?php echo "$".$bid_prices[$i]; ?></ul>
                             <div class="progress-bar">
@@ -327,6 +408,7 @@ ob_start(); // Enable output buffering
                             </div>
                             <li><?php echo "Volume : ".$bid_volumes[$i]; ?></li>
                         <?php
+                                }
                             }
                         ?>
                     </div>

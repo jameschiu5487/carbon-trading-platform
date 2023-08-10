@@ -1,5 +1,4 @@
 <?php
-ob_start(); // Enable output buffering
     // session_start();
     // require_once 'dbh.inc.php';
     // require_once 'functions.inc.php';
@@ -83,13 +82,13 @@ ob_start(); // Enable output buffering
         }
 
         if (emptyInputLogin($username, $pwd) !== false) {
-            header("location: ./login.php?error=emptyinput");
-            ob_end_flush();
+            header("location: ../login.php?error=emptyinput");
+            exit();
         }
 
         loginUser($conn, $username, $pwd);
         // setcookie("user", $username, time() + 86400);        
     } else {
-        header("location: https://carbon-trading.azurewebsites.net/login.php");
-        ob_end_flush();
+        header("location: ../login.php");
+        exit();
     }
