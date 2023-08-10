@@ -18,11 +18,12 @@
             </tr>';
 
     while ($row = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC)) {
-        $dateTimeObject = $row['time1']; // Assuming you have a DateTime object
-        $timestampString = (string) $dateTimeObject->getTimestamp();
+        $dateTimeObject = $row['time1']; // Create a DateTime object
+        // Convert the DateTime object to a string using the format method  
+        $formattedDate = $dateTimeObject->format('Y-m-d H:i:s');
         $html .= '<tr>';
         $html .= '<td>' . $row['id'] . '</td>';
-        $html .= '<td>' . $timestampString . '</td>';
+        $html .= '<td>' . $formattedDate . '</td>';
         $html .= '<td>' . $row['request'] . '</td>';
         $html .= '<td>' . $row['volume'] . '</td>';
         // $html .= '<td>' . $row['price'] . '</td>';
